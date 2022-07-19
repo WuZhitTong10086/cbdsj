@@ -1,0 +1,6 @@
+<radio-group name="radio" bindchange="radioChange">
+  <label class="radio" wx:for="{{radioItems}}" wx:key="index" data-current="{{index}}">
+    <radio color="#1775E6" value="{{item.value}}" checked="{{item.checked}}"/>
+    {{item.name}}
+  </label>
+</radio-group>

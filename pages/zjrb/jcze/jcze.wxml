@@ -1,0 +1,95 @@
+<view class="container">
+  <view class="top">
+    <view class="top_l">
+      <view style="width: 168rpx;display: flex;align-items: center;justify-content: center;">{{co_name}}</view>
+      <view class="shu"></view>
+      <view style="width:115rpx;display: flex;align-items: center;justify-content: center;">{{selectDate[date_num]}}</view>
+    </view>
+    <view class="top_r"></view>
+  </view>
+  <view class="midd">
+    <view style="display: flex; align-items: center;">
+      <view class="switch" >
+        <view class="switchNums {{_num == 0?'currentNum':''}}"   bindtap="switchChange" data-index="0">{{selectOpen[0]}}</view>
+        <view class="switchNums {{_num == 1?'currentNum':''}}"  bindtap="switchChange" data-index="1">{{selectOpen[1]}}</view>
+      </view>
+      <view class="top_r">单位：万元</view>
+    </view>
+    <view class="yuanbi_d yuanbi_active" wx:if="{{_num ==0}}">RMB</view>
+    <view class="yuanbi" wx:if="{{_num ==1}}">
+      <!-- <view class="yuanbi_d {{yuanbiSelectStr == '0'?'yuanbi_active':''}} " bindtap="yuanbiSelect" data-bz="0">全部</view> -->
+      <view class="yuanbi_d {{yuanbiSelectStr == 'HKD'?'yuanbi_active':''}}" bindtap="yuanbiSelect" data-bz="HKD">HKD</view>
+      <view class="yuanbi_d {{yuanbiSelectStr == 'RMB'?'yuanbi_active':''}}" bindtap="yuanbiSelect" data-bz="RMB">RMB</view>
+      <view class="yuanbi_d {{yuanbiSelectStr == 'USD'?'yuanbi_active':''}}" bindtap="yuanbiSelect" data-bz="USD">USD</view>
+    </view>
+  </view>
+
+<view class="list" style="margin-top: 24rpx;">
+    <scroll-view class="table" scroll-x="true" scroll-y="true">
+        <view class="thead" style="width: calc(100% );">
+            <view class="th" style="width: calc(100% / 5);">类型</view>
+            <view class="th" style="width: calc((100% / 5) );">上期结余</view>
+            <view class="th" style="width: calc(100% / 5);">收入金额</view>
+            <view class="th" style="width: calc(100% / 5);">支出金额</view>
+            <view class="th" style="width: calc(100% / 5);">结存金额</view>
+        </view>
+        <scroll-view scroll-y="true"  style='height:{{tbodyHeight}}px;width: calc(100%);' class='tbody'>
+            <view class="tr" wx:for="{{data_list}}" wx:key="sIndex" wx:for-item="item" wx:for-index="idx">
+              <view class="td" style="width: calc(100% / 5); " >{{item.code}}</view>
+              <view class="td" style="width: calc((100% / 5));">{{item.ac_lamt}}</view>
+              <view class="td" style="width: calc(100% / 5);"> {{item.ac_camt}}</view>
+              <view class="td" style="width: calc(100% / 5);">{{item.ac_damt}}</view>
+              <view class="td" style="width: calc(100% / 5);">{{item.ac_balance}}</view>
+            </view>
+            <view style="height: 200rpx"></view>
+        </scroll-view>
+    </scroll-view>
+</view>
+
+
+  <!-- <view class="foot">
+    <scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll" style="width: 100%;height: 100%;">
+      <view class="table" >
+        <view style="display: flex;">  
+          <view style="text-align: center;min-width: 20%;">
+            <view class="trtit" style="border-radius: 12rpx 0 0  12rpx;">类型</view>
+            <view class="tddata" wx:for="{{data_list}}" wx:key="index" data-item="item" wx:for-index="idx">
+              {{item.code}}
+            </view>
+            
+          </view>
+          <view style="text-align: center;min-width: 20%;">
+            <view class="trtit">上期结余</view>
+            <view class="tddata" wx:for="{{data_list}}" wx:key="index" data-item="item" wx:for-index="idx">
+              
+              {{item.ac_lamt}}
+            </view>
+          </view>
+          <view style="text-align: center;min-width: 20%;">
+            <view class="trtit">收入金额</view>
+            <view class="tddata" wx:for="{{data_list}}" wx:key="index" data-item="item" wx:for-index="idx">
+              {{item.ac_camt}}
+            </view>
+          </view>
+          <view style="text-align: center;min-width: 20%;">
+            <view class="trtit">支出金额</view>
+            <view class="tddata" wx:for="{{data_list}}" wx:key="index" data-item="item" wx:for-index="idx">
+              {{item.ac_damt}}
+            </view>
+          </view>
+          <view style="text-align: center;min-width: 20%;">
+            <view class="trtit">结存金额</view>
+            <view class="tddata" wx:for="{{data_list}}" wx:key="index" data-item="item" wx:for-index="idx">
+              {{item.ac_balance}}
+            </view>
+          </view>
+         
+        </view>
+          
+      </view>
+      
+    </scroll-view>
+
+  </view> -->
+  <assistantButton></assistantButton>
+</view>

@@ -1,0 +1,14 @@
+/* 选中后的背景样式*/
+/*按钮的大小*/
+radio .wx-radio-input {
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 50%;
+  margin-left: 5rpx;
+  margin-right: 0rpx;
+  margin-top: -5rpx;
+}
+
+.radio{
+  font-size: 28rpx;
+}

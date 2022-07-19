@@ -1,0 +1,73 @@
+/**可拖动悬浮按钮样式表**/
+.btn_Suspension{
+  position: fixed;
+  height: 80rpx;
+  width: 80rpx;
+  background-color: #3474E9;
+  color: #fff;
+  font-size: 26rpx;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+  box-shadow: 1px 0px 1px 1px #ede7e7;
+}
+.Suspension_logo{
+  position:absolute;
+  height:100%;
+  width:100%;
+}
+/* 弹窗显示 */
+.popup{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  background-color: rgba(0,0,0,0.45);
+}
+.showTips{
+  position: absolute;
+  width: 100%;
+  border-radius: 8rpx;
+  z-index: 101;
+}
+
+/* 切换 问题、建议 按钮 */
+.tab {
+  display: flex;
+  justify-content: space-around;
+  margin-top: -5rpx;
+  margin-bottom: 15rpx;
+}
+
+.swiper-tab {
+  width: 230rpx;
+  margin: 0 18rpx;
+  background-color: #eee;
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  line-height: 53rpx;
+}
+
+.swiper-tab-list {
+  font-size: 24rpx;
+  display: inline-block;
+  width: 112rpx;
+  color: #777777;
+}
+
+.on {
+  color: #000;
+  background-color: #fff;
+  border-radius: 8rpx;
+  line-height: 46rpx;
+  box-shadow: 0rpx 3rpx 6rpx 0rpx rgba(0, 0, 0, 0.3);
+}
+

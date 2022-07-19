@@ -1,0 +1,85 @@
+<view class="container" style="height: 100%;">
+  <view class="top">
+    <view class="top_l">
+      <view style="display: flex;align-items: center;justify-content: center;">{{co_name}}</view>
+      <view class="shu"></view>
+      <view style="width:115rpx;display: flex;align-items: center;justify-content: center;">{{selectDate[date_num]}}</view>
+    </view>
+    <view class="select_account">
+      <picker bindchange="xingzhiChange" value="{{xingzhi_index}}" range="{{xingzhiList}}">
+        <view class="account_picker">
+          {{xingzhiList[xingzhi_index]}}
+        </view>
+      </picker>
+      <image src="../../../static/images/picker_dark.png"></image>
+    </view>
+  </view>
+  <scroll-view class="scroll-view_H" scroll-x="true" style="width: 677rpx;height: 100%;">
+    <view class="midd">
+
+      <view style="display:flex;align-items: center;">
+        <view class="switch">
+          <view class="switchNums {{_num == 0?'currentNum':''}}" bindtap="switchChange" data-index="0">{{selectOpen[0]}}</view>
+          <view class="switchNums {{_num == 1?'currentNum':''}}" bindtap="switchChange" data-index="1">{{selectOpen[1]}}</view>
+        </view>
+        <view class="top_r">单位：万元</view>
+
+      </view>
+
+
+      <view class="yuanbi_d yuanbi_active" wx:if="{{_num ==0}}">RMB</view>
+      <view class="yuanbi" wx:if="{{_num ==1}}">
+        <view class="yuanbi_d {{yuanbiSelectStr == '0'?'yuanbi_active':''}} " bindtap="yuanbiSelect" data-bz="0">全部</view>
+        <view class="yuanbi_d {{yuanbiSelectStr == 'HKD'?'yuanbi_active':''}}" bindtap="yuanbiSelect" data-bz="HKD">HKD</view>
+        <view class="yuanbi_d {{yuanbiSelectStr == 'RMB'?'yuanbi_active':''}}" bindtap="yuanbiSelect" data-bz="RMB">RMB</view>
+        <view class="yuanbi_d {{yuanbiSelectStr == 'USD'?'yuanbi_active':''}}" bindtap="yuanbiSelect" data-bz="USD">USD</view>
+      </view>
+
+    </view>
+  </scroll-view>
+  <!-- 收票日、 到期日、归属组织、金额 、收入对象 、币别 、银行 、性质 、票号  -->
+  <view class="list" style="margin-top: 24rpx;height:{{tbodyHeight-100}}px;">
+    <scroll-view class="table" scroll-x="true" scroll-y="true" style="height:{{tbodyHeight-100}}px;">
+      <view class="thead" style="width:1300rpx;">
+        <view class="Fixed_row">
+          <view class="th" style="width: 33.3%;">收票日</view>
+          <view class="th" style="width: 33.4%;">到期日</view>
+          <view class="th" style="width: 33.3%;">收票公司</view>
+        </view>
+        <view class="th" style="width: 5%;">金额</view>
+        <view class="th" style="width: 11%;">客户对象</view>
+        <view class="th" style="width: 10%;">开票公司</view>
+        <view class="th" style="width: 7%;">币别</view>
+        <view class="th" style="width: 11%;">银行</view>
+        <view class="th" style="width: 13%;">性质</view>
+        <view class="th" style="width: 13%;">票号</view>
+        <!-- <view class="th" style="width: calc(100% / 4);">票号</view>
+        <view class="th" style="width: calc((100% / 4) );">性质</view>
+        <view class="th" style="width: calc(100% / 4);">币别</view>
+        <view class="th" style="width: calc(100% / 4);">票面金额</view> -->
+      </view>
+      <view scroll-y="true" style='width:1300rpx;' class='tbody'>
+        <view class="tr" wx:for="{{data_list}}" wx:key="sIndex" wx:for-item="item" wx:for-index="idx" style="display:flex;">
+          <view class="Fixed_row" style="background: {{idx%2===0 ? '#ffffff':'#f5f5f5'}};">
+            <view class="td" style="width: 33.3%;">{{item.ar_rec_date}}</view>
+            <view class="td" style="width: 33.4%;">{{item.ar_exp_date}}</view>
+            <view class="td" style="width: 33.3%;">{{item.org_name}}</view>
+          </view>
+          <view class="td" style="width: 5%;">{{item.ar_camt}}</view>
+          <view class="td" style="width: 11%;" bindtap='changeCuName' id='客户对象' data-cu_name='{{item.ar_income_obj}}'>{{ar_income_obj1[idx]}}</view>
+          <view class="td" style="width: 10%;" bindtap='changeCuName' id='开票公司' data-cu_name='{{item.ar_drawer}}'>{{item.ar_drawer1}}</view>
+          <view class="td" style="width: 7%;">{{item.od_id}}</view>
+          <view class="td" style="width: 11%;" bindtap='changeCuName' id='银行' data-cu_name='{{item.bk_name}}'>{{item.bk_name1}}</view>
+          <view class="td" style="width: 13%;">{{item.ar_nature}}</view>
+          <view class="td" style="width: 13%;">{{item.ar_docu}}</view>
+          <!-- <view class="td piaohao" style="width: calc(100% / 4); color: #4580EB;" bindtap="yspjDetail" data-id="{{idx}}">{{item.ar_docu}}</view>
+          <view class="td" style="width: calc((100% / 4));">{{item.ar_nature}}</view>
+          <view class="td" style="width: calc(100% / 4);"> {{item.od_id}}</view>
+          <view class="td" style="width: calc(100% / 4);">{{item.ar_jamt}}</view> -->
+        </view>
+        <view style="height: 100rpx"></view>
+      </view>
+    </scroll-view>
+  </view>
+  <assistantButton></assistantButton>
+</view>

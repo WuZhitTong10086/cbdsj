@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "财报大数据",
+  "usingComponents": {
+    "assistantButton": "/components/assistantButton/assistantButton",
+    "ec-canvas": "../../ec-canvas/ec-canvas"
+  },
+  "enablePullDownRefresh": false
+}

@@ -1,0 +1,252 @@
+<!--pages/jyzb/jyzb.wxml-->
+<view class="container">
+  <view class="jyzb_t">
+    <view class="jyzb_t_date">
+      <!-- <view class="switch" >
+        <view class="switchNums {{_num == 0?'currentNum':''}}"   bindtap="switchChange" data-index="0">{{selectOpen[0]}}</view>
+        <view class="switchNums {{_num == 1?'currentNum':''}}"  bindtap="switchChange" data-index="1">{{selectOpen[1]}}</view>
+      </view> -->
+      <view class="date_ym ">
+        <picker mode="date" fields="month" value="{{dataList[0].ac_ym1}}" end="{{endMonth1}}"   bindchange="bindDateChange1" style="height: 100%;">
+          <view class="picker" style="height:48rpx;display: flex; align-items: center;">
+            {{dataList[0].ac_ym1}}
+            <image style="width: 16rpx;height: 10rpx;margin-left: 15rpx;" src="../../../static/images/picker_dark.png"></image>
+          </view>
+        </picker>
+      </view>
+      <view style="width: 70rpx;text-align: center;font-size: 24rpx;line-height: 50rpx;">至</view>
+      <view class="date_ym">
+        <picker mode="date" fields="month" value="{{dataList[0].ac_ym2}}" end="{{endMonth2}}"   bindchange="bindDateChange2" style="height: 100%;">
+          <view class="picker" style="height:48rpx;display: flex; align-items: center;">
+            {{dataList[0].ac_ym2}}
+            <image style="width: 16rpx;height: 10rpx;margin-left: 15rpx;" src="../../../static/images/picker_dark.png"></image>
+          </view>
+        </picker>
+      </view>
+      <view style="margin-left: 30rpx;font-size: 28rpx;font-weight: bold;height: 50rpx;line-height: 50rpx;">{{org_name}}</view>
+      
+    </view>
+      <view class="jyzb_tit"  >
+        <!-- <view style="text-align: center; width: 18%;">工艺<text>\r\n</text>类别</view> -->
+        <view wx:if="{{code == '01'}}" style="text-align: center; width: 25%;">工艺<text>\r\n</text>类别</view>
+        <view wx:if="{{code == '02'}}" style="text-align: center; width: 25%;">客户</view>
+        <view wx:if="{{code == '03'}}" style="text-align: center; width: 25%;">加工厂</view>
+
+        <view style="text-align: center; width: 10%;">评价</view>
+        <view style="text-align: center;width: 20%;">销售额</view>
+        <view style="width: 15%;text-align: center;">销售<text>\r\n</text>平方</view>
+        <view style="text-align: center;width: 20%;">销售额<text>\r\n</text>占比</view>
+        <view style="width: 15%;text-align: center;">同比</view>
+        <view style="width: 15%;text-align: center;">环比</view>
+      </view>
+      <scroll-view scroll-y="true" style="max-height: 535rpx;">
+        <!-- <block wx:for="{{dataList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="jyzb_tj_l" data-id="{{idx}}" bindtap="selectTjIndex" wx:if="{{item.item_own==''}}">
+            <view class="jyzb_tj_l_l {{blue_active_index==idx?'blue':''}} ">
+              <text style="padding-left:5px;">{{item.type_name}}</text>
+              <image  style="height: 12rpx;width: 16rpx; padding-right:8px;padding-left:8px;" mode="heightFix" class="{{ select_index == idx?'img_fz':''}}" src="../../../static/images/picker_dark.png"></image>
+            </view>
+            <view class="jyzb_tj_02" style="text-align: left;"><text style="font-weight: bold;margin-left: 30rpx;">{{item.data_lev}}</text> </view>
+            <view class="jyzb_tj_02" style="text-align: center;width: 17%;">{{item.data_01}}</view>
+            <view class="jyzb_tj_03"  >{{item.data_02}}</view>
+            <view class="jyzb_tj_03" >{{item.data_03}}</view>
+            <view class="jyzb_tj_03" >{{item.data_y2y}}</view>
+            <view class="jyzb_tj_03" >{{item.data_m2m}}</view>
+          </view>
+          <block  wx:if="{{select_index == idx}}" wx:for="{{dataList}}" wx:key="unique" wx:for-item="item1">
+            <view class="jyzb_tj_l child_three" data-id="{{idx}}" bindtap="selectTjIndex" wx:if="{{item1.type_no == item.item_own}}" >
+              <view class="jyzb_tj_l_l child_three" style="color: rgba(23, 117, 230, 1);">{{item1.type_name}}</view>
+              <view class="jyzb_tj_02" style="text-align: left;"><text style="font-weight: bold;margin-left: 30rpx;">{{item1.data_lev}}</text> </view>
+              <view class="jyzb_tj_02" style="text-align: center;width: 17%;">{{item.data_01}}</view>
+              <view class="jyzb_tj_03"  >{{item1.data_02}}</view>
+              <view class="jyzb_tj_03" >{{item1.data_03}}</view>
+              <view class="jyzb_tj_03" >{{item1.data_y2y}}</view>
+              <view class="jyzb_tj_03" >{{item1.data_m2m}}</view>
+            </view>
+          </block>
+        </block> -->
+        <block wx:for="{{dataList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="jyzb_tj_l" data-id="{{idx}}" bindtap="selectTjIndex" wx:if="{{item.item_own==''}}">
+            <view class="foot_list " style="width: 25%;color:{{colorIndex == idx?'rgba(23, 117, 230, 1)':'#4a4a4a'}};">
+              <text style="padding-left:5px;">{{item.type_name}}</text>
+              <view style="width: 16rpx; padding-right:5px;padding-left:5px;">
+                <image wx:if="{{item.have_a_lower}}" style="height: 12rpx;width: 16rpx; padding-right:5px;padding-left:5px;" mode="heightFix" class="{{ select_index == idx?'img_fz':''}}" src="../../../static/images/bluexia.png"></image>
+              </view> 
+              
+            </view>
+            <view class="jyzb_tj_02" style="text-align: center;width: 10%;">
+              <text style="font-weight: bold;text-align: center;">{{item.data_lev}}</text> 
+            </view>
+            <view class="jyzb_tj_02" style="text-align: center;width: 20%;">{{item.data_01}}</view>
+            <view class="jyzb_tj_03" style="width: 15%;" >{{item.data_02}}</view>
+            <view class="jyzb_tj_03" style="width: 20%;">{{item.data_03}}</view>
+            <view class="jyzb_tj_03" style="width: 15%;">{{item.data_y2y}}</view>
+            <view class="jyzb_tj_03" style="width: 15%;">{{item.data_m2m}}</view>
+          </view>
+          <block  wx:if="{{select_index == idx}}" wx:for="{{dataList}}" wx:key="index1" wx:for-item="item1" wx:for-index="idx1">
+            <view class="jyzb_tj_l child_three" data-id="{{idx1}}" bindtap="selectTjIndex" wx:if="{{item.type_no == item1.item_own}}" >
+              <view class="jyzb_tj_l_l child_three" style="color:{{colorIndex == idx1?'rgba(23, 117, 230, 1)':'#4a4a4a'}};width: 25%;">
+                <text style="padding-left:5px;">{{item1.type_name}}</text> 
+              </view>
+              <view class="jyzb_tj_02" style="text-align: left;width: 10%;">
+                <text style="font-weight: bold;">{{item1.data_lev}}</text> 
+              </view>
+              <view class="jyzb_tj_02" style="text-align: center;width: 15%;">{{item1.data_01}}</view>
+              <view class="jyzb_tj_03"  style="width: 20%;">{{item1.data_02}}</view>
+              <view class="jyzb_tj_03" style="width: 15%;">{{item1.data_03}}</view>
+              <view class="jyzb_tj_03" style="width: 20%;">{{item1.data_y2y}}</view>
+              <view class="jyzb_tj_03" style="width: 15%;">{{item1.data_m2m}}</view>
+            </view>
+          </block>
+        </block>
+      </scroll-view>
+    
+  </view>
+  <view class="nav_1" style="margin-top: 20rpx;"></view> 
+  <view class="jyzb_b">
+    <view class="part2_table" >
+          <view class="data_years">
+            <view>
+              <view class="data_years_ym"  style="border-left: 1rpx rgba(216, 216, 216, 1) solid;">年份</view>
+              <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+                  <view  class="{{idx?'jyzb_blue':'jyzb_green'}}" >{{item.ac_yy}}</view>
+              </block>
+            </view>
+            <view>
+              <view class="data_years_ym">01</view>
+              <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+                  <view class="{{idx?'jyzb_blue':'jyzb_green'}}" >{{item.ac_01==null?'':item.ac_01}}</view>
+              </block>
+            </view>
+            <view>
+              <view class="data_years_ym">02</view>
+              <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+                  <view class="{{idx?'jyzb_blue':'jyzb_green'}}" >{{item.ac_02==null?'':item.ac_02}}</view>
+              </block>
+            </view>
+            <view>
+              <view class="data_years_ym">03</view>
+              <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+                  <view class="{{idx?'jyzb_blue':'jyzb_green'}}" >{{item.ac_03==null?'':item.ac_03}}</view>
+              </block>
+            </view>
+            <view>
+              <view class="data_years_ym">04</view>
+              <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+                  <view class="{{idx?'jyzb_blue':'jyzb_green'}}" >{{item.ac_04==null?'':item.ac_04}}</view>
+              </block>
+            </view>
+            <view>
+              <view class="data_years_ym">05</view>
+              <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+                  <view class="{{idx?'jyzb_blue':'jyzb_green'}}" >{{item.ac_05==null?'':item.ac_05}}</view>
+              </block>
+            </view>
+            
+            <view>
+              <view class="data_years_ym">06</view>
+              <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+                  <view class="{{idx?'jyzb_blue':'jyzb_green'}}" >{{item.ac_06==null?'':item.ac_06}}</view>
+              </block>
+            </view>
+            <view>
+              <view class="data_years_ym">07</view>
+              <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+                  <view class="{{idx?'jyzb_blue':'jyzb_green'}}" >{{item.ac_07==null?'':item.ac_07}}</view>
+              </block>
+            </view>
+            <view>
+              <view class="data_years_ym">08</view>
+              <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+                  <view class="{{idx?'jyzb_blue':'jyzb_green'}}" >{{item.ac_08==null?'':item.ac_08}}</view>
+              </block>
+            </view>
+            <view>
+              <view class="data_years_ym">09</view>
+              <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+                  <view class="{{idx?'jyzb_blue':'jyzb_green'}}" >{{item.ac_09==null?'':item.ac_09}}</view>
+              </block>
+            </view>
+            <view>
+              <view class="data_years_ym">10</view>
+              <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+                  <view class="{{idx?'jyzb_blue':'jyzb_green'}}" >{{item.ac_10==null?'':item.ac_10}}</view>
+              </block>
+            </view>
+            <view>
+              <view class="data_years_ym">11</view>
+              <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+                  <view class="{{idx?'jyzb_blue':'jyzb_green'}}" >{{item.ac_11==null?'':item.ac_11}}</view>
+              </block>
+            </view>
+            <view>
+              <view class="data_years_ym">12</view>
+              <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+                  <view class="{{idx?'jyzb_blue':'jyzb_green'}}" >{{item.ac_12==null?'':item.ac_12}}</view>
+              </block>
+            </view>
+            <view>
+              <view class="data_years_ym">合计</view>
+              <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+                  <view class="{{idx?'jyzb_blue':'jyzb_green'}}" >{{item.ac_total}}</view>
+              </block>
+            </view>
+          </view>
+          <!-- <view class="chart_desc">
+            <view class="chart_desc_left">单位：万元</view>
+            <view class="chart_desc_right">
+              <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+                <view   class="{{(idx%2)==0?'left_cdr':'right_cdr'}}">{{item.ac_yy}}/01-{{item.ac_yy}}/12</view>
+              </block>
+            </view>
+          </view> -->
+    </view>
+
+    <view class="chart_desc">
+        <view class="jyzb_zzl_select">
+          <view class="jyzb_zzl_l {{ind_code=='data_01'?'active':''}}" bindtap="changeDataCode" data-code="data_01" data-codeName="销售额(不含税)"><view>销售额(不含税)</view>  
+            <image bindtap="sjsmOpen"  style="width: 21rpx;height: 21rpx;" src="../../../static/images/wenhao.png"></image>
+          </view>
+          <view class="jyzb_zzl_l {{ind_code=='data_02'?'active':''}}" bindtap="changeDataCode" data-code="data_02" data-codeName="销售平方">
+            <view>销售平方</view>  
+            <image style="width: 21rpx;height: 21rpx;" src="../../../static/images/wenhao.png"></image>
+          </view>
+          <view class="jyzb_zzl_l {{ind_code=='data_03'?'active':''}}" bindtap="changeDataCode" data-code="data_03" data-codeName="销售额占比">
+            <view>销售额占比</view>  
+            <image style="width: 21rpx;height: 21rpx;" src="../../../static/images/wenhao.png"></image>
+          </view>
+        </view>
+    </view>
+    <view class="jyzb_dw " style="margin-top: 8rpx;">
+      <view class="jyzb_dw_l"> 
+        <view wx:if="{{code== '01'}}">工艺类别：</view>
+        <view style="color: #9B9B9B;">{{type_name}}</view>
+      </view>
+      <view class="jyzb_dw_r" wx:if="{{jyzbIndexTableList[0]}}">
+        <view style="width: 25rpx;height: 6rpx;background: #7ED321;border-radius: 3rpx;margin-right: 10rpx;"></view>
+        <view>{{jyzbIndexTableList[0].ac_yy}}/01-{{jyzbIndexTableList[0].ac_yy}}/12</view>
+      </view>
+    </view>
+    <view class="jyzb_dw" style="margin-top: 15rpx;">
+      <view class="jyzb_dw_l">
+        <view>单位：</view>
+        <view style="color: #9B9B9B;">{{unit}}</view>
+      </view>
+      <view class="jyzb_dw_r" wx:if="{{jyzbIndexTableList[1]}}">
+        <view style="width: 25rpx;height: 6rpx;background: #4A90E2;border-radius: 3rpx;margin-right: 10rpx;"></view>
+        <view>{{jyzbIndexTableList[1].ac_yy}}/01-{{jyzbIndexTableList[1].ac_yy}}/12</view>
+      </view>
+    </view>
+    
+    <view class="jyzb_line">
+      <!-- <canvas canvas-id="jyzbChart" disable-scroll="true" class="canvas jyzbline_canvas" bindtouchstart="touchHandler"></canvas> -->
+
+      <image wx:if="{{jyzbChartImagePath}}" src="{{jyzbChartImagePath}}" mode="widthFix" style="width: 740rpx;  margin-bottom: -25rpx; "></image>
+      <canvas wx:if="{{!jyzbChartImagePath}}"  canvas-id="jyzbChart" class="canvas" ></canvas>
+
+    </view>
+  </view>
+  <assistantButton functionid="{{functionid}}"></assistantButton>
+</view>
+
+

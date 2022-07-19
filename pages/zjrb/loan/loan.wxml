@@ -1,0 +1,62 @@
+<wxs src="../../../wxs/strcut.wxs" module="tools" />
+
+<view class="container">
+  <view class="top">
+    <view class="top_l">
+      <view style="display: flex;align-items: center;justify-content: center;">{{co_name}}</view>
+      <view class="shu"></view>
+      <view style="width:115rpx;display: flex;align-items: center;justify-content: center;">当月</view>
+    </view>
+    <view style="display: flex;align-items: center;">
+      <view class="select_account" style="margin-right: 20rpx;">
+        <picker bindchange="xingzhiChange" value="{{xingzhi_index}}" range="{{xingzhiList}}">
+          <view class="account_picker">
+            {{xingzhiList[xingzhi_index]}} </view>
+        </picker>
+        <image src="../../../static/images/picker_dark.png"></image>
+      </view>
+      <view class="top_r">单位：万元</view>
+    </view>
+
+  </view>
+  <view class="list" style="margin-top: 24rpx;height: {{tbodyHeight}}px;">
+    <scroll-view class="table" scroll-x="true" scroll-y="true" style="height: {{tbodyHeight}}px;">
+      <view class="thead" style="width: 1442rpx;z-index: 9999; display: flex;top: 0px;position: sticky;">
+        <view style="width: 22.22%;z-index: 10;left: 0px;position: sticky;background: #f5f5f5;">
+          <view class="th" style="width: 50%;">公司</view>
+          <view class="th" style="width: 50%;">银行</view>
+        </view>
+        <view class="th" style="width: 11.11%;">授信额度</view>
+        <view class="th" style="width: 11.11%;">贷款余额</view>
+        <view class="th" style="width: 11.11%;">当月利息</view>
+        <view class="th" style="width: 11.11%;">当月新增</view>
+        <view class="th" style="width: 11.11%;">当月还款</view>
+        <view class="th" style="width: 11.11%;">上月余额</view>
+        <view class="th" style="width: 11.11%;">账号</view>
+      </view>
+      <view style='height:{{tbodyHeight}}px;width: 1442rpx;' class='tbody'>
+        <view class="tr" wx:for="{{data_list}}" wx:key="sIndex" wx:for-item="item" wx:for-index="idx" style="display: flex;">
+
+          <view style="width: 22.22%;z-index: 10;left: 0px;position: sticky;background: {{idx%2===0 ? '#ffffff':'#f5f5f5'}};">
+            <view class="td" style="width: 50%;">
+              {{item.org_name}}
+            </view>
+            <view class="td" style="width: 50%;">
+              {{item.bk_sno_copy}}
+            </view>
+          </view>
+
+          <view class="td" style="width: 11.11%;">{{item.line_of_credit}}</view>
+          <view class="td" style="width: 11.11%;">{{item.ac_balance}}</view>
+          <view class="td" style="width: 11.11%;">{{item.ac_interest}}</view>
+          <view class="td" style="width: 11.11%;">{{item.ac_increase}}</view>
+          <view class="td" style="width: 11.11%;">{{item.ac_amt}}</view>
+          <view class="td" style="width: 11.11%;">{{item.ac_lmt}}</view>
+          <view class="td" style="width: 11.11%;"><text wx:if="{{item.bk_no != '' }}">*{{tools.strcut(item.bk_no,-4)}}</text></view>
+        </view>
+        <view style="height: 200rpx"></view>
+      </view>
+    </scroll-view>
+  </view>
+  <assistantButton></assistantButton>
+</view>

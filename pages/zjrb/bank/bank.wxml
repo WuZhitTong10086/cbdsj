@@ -1,0 +1,190 @@
+<wxs src="../../../wxs/strcut.wxs" module="tools" />
+<view class="container">
+  <view style="width: 100%;position: fixed;">
+    <view class="top">
+      <view class="top_l">
+        <view style="width: 168rpx;display: flex;align-items: center;">{{co_name}}</view>
+        <view class="shu"></view>
+        <view style="width:115rpx;display: flex;align-items: center;">{{selectDate[date_num]}}</view>
+      </view>
+      <view class="select_account">
+        <picker bindchange="accountChange" range="{{bank_accounts}}">
+          <view class="account_picker">
+            {{bank_accounts[account_index]}}
+          </view>
+        </picker>
+        <image src="../../../static/images/picker_dark.png"></image>
+      </view>
+    </view>
+    <scroll-view class="scroll-view_H" scroll-x="true" style="width: 690rpx;height: 100%;margin: 0 auto;">
+      <view class="midd">
+        <view style="display: flex; align-items: center;">
+          <view class="switch">
+            <view class="switchNums {{_num == 0?'currentNum':''}}" bindtap="switchChange" data-index="0">{{selectOpen[0]}}</view>
+            <view class="switchNums {{_num == 1?'currentNum':''}}" bindtap="switchChange" data-index="1">{{selectOpen[1]}}</view>
+          </view>
+          <view class="top_r">单位：万元</view>
+        </view>
+        <view class="yuanbi_d yuanbi_active" wx:if="{{_num ==0}}">RMB</view>
+        <view class="yuanbi" wx:if="{{_num ==1}}">
+          <view class="yuanbi_d {{yuanbiSelectStr == '0'?'yuanbi_active':''}} " bindtap="yuanbiSelect" data-bz="0">全部</view>
+          <view class="yuanbi_d {{yuanbiSelectStr == 'HKD'?'yuanbi_active':''}}" bindtap="yuanbiSelect" data-bz="HKD">HKD</view>
+          <view class="yuanbi_d {{yuanbiSelectStr == 'RMB'?'yuanbi_active':''}}" bindtap="yuanbiSelect" data-bz="RMB">RMB</view>
+          <view class="yuanbi_d {{yuanbiSelectStr == 'USD'?'yuanbi_active':''}}" bindtap="yuanbiSelect" data-bz="USD">USD</view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view style="display: flex;width: 674rpx;">
+
+  </view>
+
+  <view class="list" style="height: {{tbodyHeight}}px;">
+    <scroll-view class="table" scroll-x="true" scroll-y="true" style="height: {{tbodyHeight}}px;">
+      <view style="height: auto;">
+        <view class="thead" style="width: 1100rpx;display: flex; z-index: 9990;top: 0px;position: sticky;">
+          <view style="display: flex;z-index: 9990;left: 0px;position: sticky;background: #f5f5f5;width: 30%;">
+            <view class="th" style="width: 33%;">日期</view>
+            <view class="th" style="width: 38%;">银行</view>
+            <view class="th" style="width: 29%;">账号</view>
+          </view>
+          <view class="th" style="width: 10%;">收入</view>
+          <view class="th" style="width: 10%;">支出</view>
+          <view class="th" style="width: 10%;">结存</view>
+
+          <view class="th" style="width: 10%;">币别</view>
+
+          <view class="th" style="width: 25%;text-align: left;">摘要</view>
+        </view>
+        <view scroll-y="true" style='width: 1100rpx;' class='tbody'>
+          <view class="tr" wx:for="{{data_list}}" wx:key="sIndex" wx:for-item="item" wx:for-index="sIndex">
+            <view style="background:{{sIndex%2===0 ? '#ffffff':'#f5f5f5'}};display: flex;z-index: 10;left: 0px;position: sticky;width: 30%;">
+              <view class="td" style="width: 33%;">{{item.ac_date}}</view>
+              <view class="td" style="width: 38%">{{item.bk_name}}</view>
+              <view class="td" style="width: 29%;">{{tools.strcut(item.bk_no,-4)}}</view>
+            </view>
+            <view class="td" style="width: 10%;"> {{_num==0?item.ac_camt1:item.ac_camt}}</view>
+            <view class="td" style="width: 10%;">{{_num==0?item.ac_damt1:item.ac_damt}}</view>
+            <view class="td" style="width: 10%;">{{_num==0?item.ac_balance1:item.ac_balance}}</view>
+            <view class="td" style="width: 10%;">{{item.od_id}}</view>
+            <view class="td" style="color: rgb(114, 174, 245);width: 25%;text-align: left;">
+              <text wx:if="{{item.showMore==false && item.ac_remk.length > 10 }}" data-msg="{{item.ac_remk}}" data-idx="{{idx}}" bindtap="showMore">{{item.ac_remk1}}...</text>
+              <text wx:else="{{item.showMore==true}}">{{item.ac_remk}}</text>
+            </view>
+          </view>
+          <view style="height: 200rpx"></view>
+        </view>
+      </view>
+
+    </scroll-view>
+  </view>
+
+  <!-- <view class="select_bank_no" wx:if="{{account_index_tops !=0}}"> {{bank_accounts[account_index_tops]}} </view> -->
+
+  <!-- <scroll-view class="foot" scroll-y="true" style="height: 75vh;">
+    <scroll-view class="scroll-view_H" scroll-x="true"  style="width: 100%;"> -->
+  <!-- <view class="table" >
+        <view style="display: flex;">   
+          <view style="text-align: center;">
+            <view class="trtit" style="border-radius: 12rpx 0 0  12rpx; ">日期</view>
+            <block wx:for="{{data_list}}" wx:key="index" data-item="item" wx:for-index="idx">
+              <view class="tddata"  wx:if="{{item.isshow == '1' }}">
+                {{item.ac_date}}
+              </view>
+            </block>
+            
+          </view>
+          
+          <view style="text-align: center;" wx:if="{{_num}}">
+            <view class="trtit">币别</view>
+            <view class="tddata" wx:if="{{item.isshow == '1' }}" wx:for="{{data_list}}" wx:key="index" data-item="item" wx:for-index="idx">
+              {{item.od_id}}
+            </view>
+          </view>
+          <view style="text-align: center;">
+            <view class="trtit">收入金额</view>
+            <view class="tddata" wx:if="{{item.isshow == '1' }}" wx:for="{{data_list}}" wx:key="index" data-item="item" wx:for-index="idx">
+              {{_num==0?item.ac_camt1:item.ac_camt}}
+            </view>
+          </view>
+          <view style="text-align: center;height: 60rpx;" >
+            <view class="trtit" >支出金额</view>
+            <view class="tddata" wx:if="{{item.isshow == '1' }}" wx:for="{{data_list}}" wx:key="index" data-item="item" wx:for-index="idx" >
+              {{_num==0?item.ac_damt1:item.ac_damt}}
+            </view>
+          </view>
+          <view style="text-align: center;height: 60rpx;" >
+            <view class="trtit"  >结存金额</view>
+            <view class="tddata" wx:if="{{item.isshow == '1' }}" wx:for="{{data_list}}" wx:key="index" data-item="item" wx:for-index="idx" >
+              {{_num==0?item.ac_balance1:item.ac_balance}}
+            </view>
+          </view>
+          <view style="text-align: center;">
+            <view class="trtit">银行</view>
+            <view class="tddata" wx:if="{{item.isshow == '1' }}" wx:for="{{data_list}}" wx:key="index" data-item="item" wx:for-index="idx" style="display: flex;align-content: center;">
+              {{item.bk_name}}
+            </view>
+          </view>
+          <view style="text-align: center;">
+            <view class="trtit">账号</view>
+            <view class="tddata" wx:if="{{item.isshow == '1' }}" wx:for="{{data_list}}" wx:key="index" data-item="item" wx:for-index="idx">
+              *{{tools.strcut(item.bk_no,-4)}}
+            </view>
+          </view>
+          <view style="text-align: center;height: 60rpx;" >
+            <view class="trtit" style="border-radius: 12rpx 0 0  12rpx;text-align: left;">摘要</view>
+            <view class="tddata" style="justify-content: start;" wx:if="{{item.isshow == '1' }}" wx:for="{{data_list}}" wx:key="index" data-item="item" wx:for-index="idx"  >
+              <text wx:if="{{item.showMore==false && item.ac_remk.length > 10 }}" data-msg="{{item.ac_remk}}" data-idx="{{idx}}" bindtap="showMore">{{item.ac_remk1}}...</text>
+              <text wx:else="{{item.showMore==true}}">{{item.ac_remk}}</text>
+            </view>
+          </view>
+        </view>
+          
+        </view> -->
+  <!-- <view class="table" >
+        <view class="tr trtit" style="width:1800rpx">
+            <view class="th" style="width: 150rpx;">日期</view>
+            <view class="th" style="width: 250rpx;">银行</view>
+            <view class="th" style="width: 280rpx;;">账号</view>
+            <view class="th" style="width: 150rpx;">币别</view>
+            <view class="th" style="width: 150rpx;">收入金额</view>
+            <view class="th" style="width: 150rpx;">支出金额</view>
+            <view class="th" style="width: 150rpx;">结存金额</view>
+            <view class="th" style="width: 150rpx;">摘要</view>
+        </view>
+        <view class="tr trlist" wx:for="{{data_list}}" wx:key="index" data-item="item" wx:for-index="idx" style="width:1800rpx">
+            <view class="td" style="width: 150rpx;">{{item.ac_date}}</view>
+            <view class="td" style="width: 280rpx;">{{item.bk_name}}</view>
+            <view class="td" style="width: 150rpx;">{{item.bk_no}}</view>
+            <view class="td" style="width: 150rpx;">{{item.od_id}}</view>
+            <block wx:if="{{_num ==0}}">
+              <view class="td" style="width: 150rpx;">{{item.ac_camt1}}</view>
+              <view class="td" style="width: 150rpx;">{{item.ac_damt1}}</view>
+              <view class="td" style="width: 150rpx;">{{item.ac_balance1}}</view>
+            </block>
+            <block wx:if="{{_num ==1}}">
+              <view class="td">{{item.ac_camt}}</view>
+              <view class="td">{{item.ac_damt}}</view>
+              <view class="td">{{item.ac_balance}}</view>
+            </block>
+            <view class="td" style="width: 150rpx;">{{item.ac_remk}}</view>
+        </view>
+    </view> -->
+  <!-- </scroll-view>
+
+  </scroll-view> -->
+
+
+  <view class="description" wx:if="{{browseShow}}" bindtap="browseClick">
+
+    <view class="desc_d" style="margin-top: 20rpx;">
+      <view class="desc_d_t">数据说明 <image src="../../../static/images/desc_close.png" style="width: 44rpx; height: 44rpx;position: absolute;right: 18rpx;top: 18rpx;"></image>
+      </view>
+      <view style="font-size: 24rpx;line-height: 40rpx;color: #4A4A4A;margin-bottom: 16rpx;display: flex;flex-direction: column;justify-content: center;align-items: center;width: 100%;height: 200rpx;">
+        <view>{{browseShowMsg}}</view>
+      </view>
+    </view>
+  </view>
+  <assistantButton></assistantButton>
+</view>

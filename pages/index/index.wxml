@@ -1,0 +1,981 @@
+<wxs src="../../wxs/tofloat.wxs" module="tools" />
+<view class="container" id="zijin">
+  <!-- <canvas canvas-id="lineCanvas" disable-scroll="true" class="canvas" bindtouchstart="touchHandler"></canvas> -->
+  <!-- <button type="primary" bindtap="updateData">更新数据</button> -->
+
+  <!-- 头部导航start -->
+  <view class="navigation_bar">
+    <view class="gray {{top_menu==1?'active':''}}" bindtap="menuActive" data-id="1">资金</view>
+    <view class="gray {{top_menu==2?'active':''}}" bindtap="menuActive" data-id="2">经营</view>
+    <view class="gray {{top_menu==3?'active':''}}" bindtap="menuActive" data-id="3" wx:if="{{isShow == true}}">资产</view>
+    <view class="gray {{top_menu==4?'active':''}}" bindtap="menuActive" data-id="4">指标</view>
+    <view class="gray {{top_menu==5?'active':''}}" bindtap="menuActive" data-id="5" wx:if="{{isShow == true}}">分析</view>
+    <view class="gray {{top_menu==6?'active':''}}" bindtap="menuActive" data-id="6" wx:if="{{isShow == true}}">目标</view>
+  </view>
+  <!-- 头部导航end -->
+  <view class="nav_1" style="margin-top: 68rpx;"></view>
+  <!-- 统计数据 -->
+  <view style="height: 40rpx;display:flex;justify-content:center;    align-items: center;">
+
+    <text bindtap="browseClick" data-id="1" class="browse">今日浏览:{{browseData.day_pnum}}人，{{browseData.day_cnum}}次</text>
+    <image bindtap="browseClick" data-id="1" style="width: 20rpx; height: 20rpx;margin-left: 15rpx;" src="../../static/images/wenhao.png"></image>
+
+    <text style="width: 50rpx;text-align: center; font-size: 20rpx;color: #4A4A4A;">|</text>
+
+    <text bindtap="browseClick" data-id="2" class="browse">更新至：{{browseData.beforDay}}</text>
+    <image bindtap="browseClick" data-id="2" style="width: 20rpx; height: 20rpx;margin-left: 15rpx;" src="../../static/images/wenhao.png"></image>
+
+  </view>
+
+
+  <!-- 轮播图 -->
+  <view class="Rotation">
+    <image src="../../static/images/banner.png"></image>
+  </view>
+
+  <!-- 资金日报start -->
+  <view class="capital_daily_t">
+    <view class="capital_daily_title">
+      <view class="cdtl"></view>
+      <view class="cdtl_t">资金日报</view>
+      <image src="../../static/images/wenhao.png"></image>
+    </view>
+    <view class="capital_daily_t_r">
+      <view class="switch">
+        <view class="switchNums {{_num == 0?'currentNum':''}}" bindtap="switchChange" data-index="0">{{selectOpen[0]}}</view>
+        <view class="switchNums {{_num == 1?'currentNum':''}}" bindtap="switchChange" data-index="1">{{selectOpen[1]}}</view>
+      </view>
+      <view class="select_company">
+        <picker bindchange="zjrbBindPickerChange" value="{{zjrb_index}}" range="{{companyList}}">
+          <view class="company_picker">
+            {{companyList[zjrb_index]}}
+          </view>
+        </picker>
+        <image src="../../static/images/select_d.png"></image>
+      </view>
+    </view>
+  </view>
+  <view class="capital_daily_m">
+    <view class="capital_daily_m_tm">
+      <view class="m_img_1 m_img">
+        <image style="width: 74rpx;  height: 43rpx;  margin-bottom: 14rpx;" bindtap="zjrbClick" data-id="1" src="../../static/images/xianjin.png"></image>
+        <view class="tm_f" catchtap="zjrbClick" data-id="1">现金 <image src="../../static/images/toright.png"></image>
+        </view>
+        <view class="cd_num num_green">{{tools.tofloat(FundBalanceData.Cash.ac_balance1)}}</view>
+        <view class="sr_num ">收入<view class="num_green">{{FundBalanceData.Cash.ac_camt1}}</view>
+        </view>
+        <view class="sr_num ">支出<view class="num_green">{{tools.tofloat(FundBalanceData.Cash.ac_damt1)}}</view>
+        </view>
+      </view>
+      <view class="m_img_2 m_img">
+        <image style="width: 59rpx;  height: 57rpx;  margin-bottom: 10rpx;" bindtap="zjrbClick" data-id="2" src="../../static/images/cunkuan.png"></image>
+        <view class="tm_f" catchtap="zjrbClick" data-id="2">银行存款 <image src="../../static/images/toright.png"></image>
+        </view>
+        <view class="cd_num num_blue">{{tools.tofloat(FundBalanceData.Bank.ac_balance1)}}</view>
+        <view class="sr_num ">收入<view class="num_blue">{{tools.tofloat(FundBalanceData.Bank.ac_camt1)}}</view>
+        </view>
+        <view class="sr_num ">支出<view class="num_blue">{{tools.tofloat(FundBalanceData.Bank.ac_damt1)}}</view>
+        </view>
+      </view>
+      <view class="m_img_3 m_img">
+        <image style="width: 50rpx;  height: 50rpx;  margin-bottom: 13rpx;" bindtap="zjrbClick" data-id="3" src="../../static/images/piaoju.png"></image>
+        <view class="tm_f" catchtap="zjrbClick" data-id="3">应收票据 <image src="../../static/images/toright.png"></image>
+        </view>
+        <view class="cd_num num_yellow">{{tools.tofloat(FundBalanceData.AR.ac_balance1)}}</view>
+        <view class="sr_num ">收入<view class="num_yellow">{{tools.tofloat(FundBalanceData.AR.ac_camt1)}}</view>
+        </view>
+        <view class="sr_num ">支出<view class="num_yellow">{{tools.tofloat(FundBalanceData.AR.ac_damt1)}}</view>
+        </view>
+      </view>
+      <view class="m_img_4 m_img">
+        <image style="width: 63rpx;  height: 62rpx;  margin-bottom: 6rpx;" bindtap="zjrbClick" data-id="4" src="../../static/images/zonge.png"></image>
+        <view class="tm_f" catchtap="zjrbClick" data-id="4">结存总额 <image src="../../static/images/toright.png"></image>
+        </view>
+        <view class="cd_num num_red">{{tools.tofloat(FundBalanceData.Fund.ac_balance1)}}</view>
+        <view class="sr_num ">收入<view class="num_red">{{tools.tofloat(FundBalanceData.Fund.ac_camt1)}}</view>
+        </view>
+        <view class="sr_num ">支出<view class="num_red">{{tools.tofloat(FundBalanceData.Fund.ac_damt1)}}</view>
+        </view>
+      </view>
+    </view>
+
+  </view>
+
+  <view class="data_cols">
+    <view class="data_col" bindtap="zjrbClick" data-id="5">
+      <view class="data_col_1" catchtap="zjrbClick" data-id="5">应付票据<view class="dc_1">当月</view>
+      </view>
+      <view class="data_col_2" catchtap="zjrbClick" data-id="5">{{NpJcData[0].ap_amt}}</view>
+      <view class="data_col_3" catchtap="zjrbClick" data-id="5">
+        <image src="../../static/images/toright.png"></image>
+      </view>
+    </view>
+    <view class="data_col" catchtap="zjrbClick" data-id="6">
+      <view class="data_col_1" data-id="6">贷款余额<view class="dc_1">当月</view>
+      </view>
+      <view class="data_col_2" data-id="6">{{loanJcData.ac_balance}}</view>
+      <view class="data_col_3">
+        <view data-id="6">新<text catchtap="zjrbClick" data-id="6">{{loanJcData.ac_increase}}</text></view>
+        <view style="padding-left: 32rpx;" catchtap="zjrbClick" data-id="6">还<text catchtap="zjrbClick" data-id="6">{{loanJcData.ac_repay}}</text></view>
+        <image src="../../static/images/toright.png" data-id="6"></image>
+      </view>
+    </view>
+  </view>
+  <!-- 资金日报end -->
+  <!-- 间隔start -->
+  <view class="gap"></view>
+  <!-- 间隔end -->
+  <!-- 经营总报start -->
+  <view class="part2" style="position: relative;">
+    <view id="jyzb" style="position: absolute;top: -90rpx;"></view>
+    <view class="part2_title">
+      <view>经营总报</view>
+      <view style="display: flex;margin-right: 40rpx;">
+        <view class="capital_daily_t_r">
+          <view class="select_company">
+            <picker mode="date" fields="month" value="{{jyzbDate}}" end="{{jyzbDateEnd}}" bindchange="bindDateChange">
+              <view class="picker">
+                {{jyzbDateStr}}
+              </view>
+            </picker>
+            <image src="../../static/images/select_d.png" style="margin-left: 8rpx;"></image>
+          </view>
+        </view>
+        <view style="display: flex;margin-right: 20rpx;font-weight: 500;color: #4A4A4A;font-size: 24rpx;align-items: center;">至</view>
+        <view class="capital_daily_t_r">
+          <view class="select_company">
+            <picker mode="date" fields="month" value="{{jyzbDate1}}" end="{{jyzbDateEnd1}}" bindchange="bindDateChange1">
+              <view class="picker">
+                {{jyzbDateStr1}}
+              </view>
+            </picker>
+            <image src="../../static/images/select_d.png" style="margin-left: 8rpx;"></image>
+          </view>
+        </view>
+        <!-- <view style="margin-left: 10rpx;font-size: 24rpx;line-height: 50rpx;">核算主体</view> -->
+      </view>
+
+    </view>
+
+    <!-- </view> -->
+
+    <view class="col_head">
+      <view style="width:165rpx;text-align:center;">核算主体 <text style="margin-left: 20rpx;"></text></view>
+      <view class="cd">收入</view>
+      <view class="cd">支出</view>
+      <view class="cd">毛利</view>
+      <view class="cd">利润</view>
+    </view>
+    <block wx:for="{{jyzbCompanyListTol}}" wx:key="index" data-item="item" wx:for-index="idx">
+      <view class="col_detail">
+        <view style="width:165rpx;text-align:center;" bindtap="jyzongb" data-cname="{{item.org_name}}" data-co="{{item.org_code}}">{{item.org_name}}<image src="../../static/images/toright_light.png"></image>
+        </view>
+        <view class="cd">{{jyzbIndexList[idx].ac_01}}</view>
+        <view class="cd">{{jyzbIndexList[idx].ac_02}}</view>
+        <view class="cd">{{jyzbIndexList[idx].ac_03}}</view>
+        <view class="cd">{{jyzbIndexList[idx].ac_04}}</view>
+      </view>
+    </block>
+
+  </view>
+  <!-- 间隔start -->
+  <view class="gap"></view>
+  <!-- 间隔end -->
+  <view class="part2_table">
+    <view class="part2_table_top" style="display: block; flex-direction: column; padding: 5rpx 0rpx 0rpx 0rpx;">
+      <!-- <view class="select_all">
+          <block wx:for="{{jyzbLbData}}" wx:key="index" data-item="item" wx:for-index="idx">
+            <view class="{{jyzbLbSelectId==idx?'zczb_select_l_active':'zczb_select_l'}}" bindtap="jyzbLbSelectDl" data-id="{{idx}}">{{item.item_name}}</view>
+          </block>
+        </view>
+        <view style="display: flex; flex-direction: column; align-items: center;justify-content: flex-start;margin-right: 20rpx;height: 115rpx;">
+          <picker bindchange="bindPickerChange1" value="{{cIndex}}" range="{{jyzbCompanyList}}" style="min-width: 160rpx;">
+            <view class="select_company">
+              {{jyzbCompanyList[cIndex]}}
+              <image src="../../static/images/select_d.png"></image>
+            </view>
+          </picker>
+          <view class="" style="margin-top: 20rpx;" wx:if="{{jyzbLbSelectName !=''}}">{{jyzbLbSelectName}}</view>
+        </view> -->
+      <view style="display: flex; flex-direction: row; align-items: center;justify-content: flex-start;margin-right: 20rpx; margin-left:0rpx;height: 60rpx;width: 100%;border-width: 1rpx;border-color: rgb(216 216 216);border-style: none none solid none;">
+        <picker bindchange="bindPickerChange1" value="{{cIndex}}" range="{{jyzbCompanyList}}" style="width: 23%;padding-bottom: 10rpx;margin-left:20rpx;padding-top: 8rpx;">
+          <view class="select_company">
+            {{jyzbCompanyList[cIndex]}}
+            <image src="../../static/images/select_d.png"></image>
+          </view>
+        </picker>
+        <view class="" style="margin-top: 0rpx; margin-left:20rpx; padding-bottom: 0rpx;" wx:if="{{jyzbLbSelectName !=''}}">
+          <view class="chart_desc_left" style="margin-left:0rpx;">单位：<text wx:if="{{bfb == ''}}"> 万元</text><text wx:if="{{bfb == '%'}}">百分比</text> </view>
+        </view>
+      </view>
+      <view class="select_all" style="padding-left: 10rpx;display: flex;flex-wrap: wrap;width: 100%;padding-top: 10rpx;">
+        <block wx:for="{{jyzbLbData}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view style="width: 24%; display: flex;">
+            <!-- <view style="width: 20%;display: flex;align-items : flex-start;text-align: center;padding-top: 6rpx;">{{jyzbSortListType[idx]}}:</view> -->
+            <view class="{{jyzbLbSelectId==idx?'zczb_select_l_active1':'zczb_select_l1'}}" bindtap="jyzbLbSelectDl2" data-id="{{idx}}" style="width:100% ;margin-left: 6rpx;">
+              <picker bindchange="jyzbLbSelect2" value="{{cIndex}}" range="{{jyzbSelectDl2List[idx]}}">
+                <view class="select_company1">
+                  {{jyzbSortList[idx]}}<view class="t">▼</view>
+                  <!-- <image src="../../static/images/select_d.png"></image> -->
+                </view>
+              </picker>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+
+    <view class="data_years">
+      <view>
+        <view class="data_years_ym" style="border-left: 1rpx rgba(216, 216, 216, 1) solid;">年份</view>
+        <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_yy}}</view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">01</view>
+        <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_01}}<text wx:if="{{item.ac_01 !=''}}"></text></view>
+        </block>
+        <!-- <view class="jyzb_green">592</view>
+              <view class="jyzb_blue">592</view> -->
+      </view>
+      <view>
+        <view class="data_years_ym">02</view>
+        <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_02}}<text wx:if="{{item.ac_02 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">03</view>
+        <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_03}}<text wx:if="{{item.ac_03 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">04</view>
+        <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_04}}<text wx:if="{{item.ac_04 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">05</view>
+        <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_05}}<text wx:if="{{item.ac_05 !=''}}"></text></view>
+        </block>
+      </view>
+
+      <view>
+        <view class="data_years_ym">06</view>
+        <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_06}}<text wx:if="{{item.ac_06 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">07</view>
+        <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_07}}<text wx:if="{{item.ac_07 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">08</view>
+        <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_08}}<text wx:if="{{item.ac_08 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">09</view>
+        <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_09}}<text wx:if="{{item.ac_09 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">10</view>
+        <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_10}}<text wx:if="{{item.ac_10 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">11</view>
+        <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_11}}<text wx:if="{{item.ac_11 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">12</view>
+        <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_12}}<text wx:if="{{item.ac_12 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">合计</view>
+        <block wx:for="{{jyzbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_total}}</view>
+        </block>
+      </view>
+    </view>
+    <view class="chart_desc" style="justify-content: space-between;">
+      <view class="chart_desc_left"></view>
+      <view class="chart_desc_right">
+        <view class="left_cdr">{{jyzbIndexTableList[0].ac_yy}}/01-12</view>
+        <view class="right_cdr" wx:if="{{jyzbIndexTableList[1].ac_yy}}">{{jyzbIndexTableList[1].ac_yy}}/01-12</view>
+      </view>
+    </view>
+  </view>
+  <view class="jyzb_line" style="width:100%;height: 165px;" wx:if="{{jyzbChartImagePath !=''}}">
+    <image wx:if="{{jyzbChartImagePath}}" src="{{jyzbChartImagePath}}" mode="widthFix" style="width: 740rpx;  margin-bottom: -25rpx; "></image>
+    <canvas wx:if="{{!jyzbChartImagePath}}" canvas-id="jyzbChart" class="canvas"></canvas>
+  </view>
+  <!-- <view class="select_jyzb" id="zczb">
+      <view class="select_jyzb_l" bindtap="jyzbTypeSub" data-id="1">
+        <image style="width: 19rpx;height: 19rpx;" src="../../static/images/shaixuan-3.png"></image>
+      筛选类别</view>
+      <view class="select_jyzb_r" wx:if="{{jyzbLbSelectName !=''}}">{{jyzbLbSelectName}}</view>
+    </view> -->
+
+
+  <!-- 经营总报end-->
+  <view class="gap"></view>
+
+  <!-- 资产总报start -->
+  <view class="part2" style="position: relative;" wx:if="{{isShow == true}}">
+    <view id="zczb" style="position: absolute;top: -90rpx;"></view>
+    <view class="part2_title">
+      <view>资产总报</view>
+      <view style="display: flex;margin-right: 40rpx;">
+        <view class="capital_daily_t_r">
+          <view class="select_company">
+            <picker mode="date" fields="month" value="{{zczbDate}}" end="{{zczbDateEnd}}" bindchange="bindZczbDateChange">
+              <view class="picker">
+                {{zczbDateStr}}
+              </view>
+            </picker>
+            <image src="../../static/images/select_d.png" style="margin-left: 8rpx;"></image>
+          </view>
+        </view>
+      </view>
+
+    </view>
+
+    <view class="col_head">
+      <view style="width:165rpx;text-align:center;">公司</view>
+      <view class="cd">流动<text>\r\n</text>资产</view>
+      <view class="cd">非流动<text>\r\n</text>资产</view>
+      <view class="cd">流动<text>\r\n</text>负债</view>
+      <view class="cd">非流动<text>\r\n</text>负债</view>
+      <view class="cd">所有者<text>\r\n</text>权益</view>
+    </view>
+    <block wx:for="{{zczbIndexList}}" wx:key="index" data-item="item" wx:for-index="idx">
+      <view class="col_detail">
+        <view style="width:165rpx;text-align:center;" bindtap="zczbDetail" data-cname="{{item.co_name}}" data-co="{{item.co_no}}">{{item.co_name}}<image src="../../static/images/toright_light.png"></image>
+        </view>
+        <view class="cd">{{item.ac_01}}</view>
+        <view class="cd">{{item.ac_02}}</view>
+        <view class="cd">{{item.ac_03}}</view>
+        <view class="cd">{{item.ac_04}}</view>
+        <view class="cd">{{item.ac_05}}</view>
+      </view>
+    </block>
+
+
+  </view>
+  <!-- <view style="height: 100rpx;" id="zczb" wx:if="{{isShow == true}}">建设中...</view> -->
+  <!-- 间隔start -->
+  <!-- <view class="gap"></view> -->
+  <!-- 间隔end -->
+  <view class="part2_table">
+    <!-- <view class="part2_table_top">
+            <view class="select_all">
+              <view class="{{zczbLbSelectId==1?'zczb_select_l_active':'zczb_select_l'}}" bindtap="zczbLbSelect" data-id="1">流动资产</view>
+              <view class="{{zczbLbSelectId==2?'zczb_select_l_active':'zczb_select_l'}}" bindtap="zczbLbSelect" data-id="2">非流动资产</view>
+              <view class="{{zczbLbSelectId==3?'zczb_select_l_active':'zczb_select_l'}}" bindtap="zczbLbSelect" data-id="3">流动负债</view>
+              <view class="{{zczbLbSelectId==4?'zczb_select_l_active':'zczb_select_l'}}" bindtap="zczbLbSelect" data-id="4">非流动负债</view>
+              <view class="{{zczbLbSelectId==5?'zczb_select_l_active':'zczb_select_l'}}" bindtap="zczbLbSelect" data-id="5">所有者权益</view>
+            </view>
+            <picker bindchange="bindPickerChange11" value="{{cIndex}}" range="{{company}}" style="min-width: 168rpx;">
+              <view class="select_company">
+                {{company[cIndex]}}
+                <image src="../../static/images/picker_dark.png"></image>
+              </view>
+            </picker>
+          </view> -->
+    <view class="part2_table_top" style="padding: 10rpx 0rpx 0rpx 0rpx;">
+
+      <!-- <view style="display: flex; flex-direction: column; align-items: center;justify-content: flex-start;margin-right: 20rpx;height: 115rpx;margin-left:15rpx">
+              <picker bindchange="bindPickerChangez" value="{{cIndex}}" range="{{zczbCompanyList}}" style="min-width: 160rpx;">
+                <view class="select_company">
+                  {{zczbCompanyList[zIndex]}}
+                  <image src="../../static/images/select_d.png"></image>
+                </view>
+              </picker>
+              <view class="" style="margin-top: 20rpx;" wx:if="{{zczbLbSelectName !=''}}">{{zczbLbSelectName}}</view>
+            </view> -->
+      <!-- <view class="select_all" style="width: 100%;">
+              <picker bindchange="bindPickerChangez" value="{{cIndex}}" range="{{zczbCompanyList}}" style="min-width: 160rpx;margin-left: 50rpx;">
+                <view class="select_company">
+                  {{zczbCompanyList[zIndex]}}
+                  <image src="../../static/images/select_d.png"></image>
+                </view>
+              </picker>
+              <block wx:for="{{zczbLbData}}" wx:key="index" data-item="item" wx:for-index="idx">
+                <view class="{{zczbLbSelectId==idx?'zczb_select_l_active':'zczb_select_l'}}" bindtap="zczbLbSelectDl" data-id="{{idx}}">{{item.item_name}}</view>
+              </block>
+              
+            </view> -->
+
+      <view class="select_all" style="display: block;width: 100%;justify-content: space-around;">
+        <view style="display: flex;flex-direction:row;border-width: 1rpx;border-color: rgb(216 216 216);border-style: none none solid none;align-items: center;height: 60rpx;padding-bottom: 0rpx;">
+          <picker bindchange="bindPickerChangez" value="{{cIndex}}" range="{{zczbCompanyList}}" style=" width: 23%;margin-left: 16rpx;margin-bottom: 9rpx;">
+            <view class="select_company">
+              {{zczbCompanyList[zIndex]}}
+              <image src="../../static/images/select_d.png"></image>
+            </view>
+          </picker>
+          <view class="chart_desc_left" style="display: flex;align-items: center;justify-content: center;margin-left: 11px;font-size: 24rpx;padding-bottom: 10rpx;">单位: 万元</view>
+        </view>
+        <view style="display: flex;flex-wrap: wrap;padding-top: 10rpx; padding-left: 10rpx;">
+          <block wx:for="{{zczbLbData}}" wx:key="index" data-item="item" wx:for-index="idx" style="display: flex;">
+            <view style="display: flex;flex-wrap: wrap;width: 50%;">
+              <view style="width: 42%;display: flex;align-items : flex-start;text-align: center;padding-top: 6rpx;">{{zczbLbData[idx].item_name}}:</view>
+              <view class="{{zczbLbSelectId==idx?'zczb_select_l_active1':'zczb_select_l1'}}" style="margin-left: 0rpx;width: 53%;" bindtap="zczbLbSelectDl2" data-id="{{idx}}">
+                <picker bindchange="zczbLbSelect2" value="{{cIndex}}" range="{{zczbSelectDl2List[idx]}}">
+                  <view class="select_company1" style="font-size: 22rpx;">
+                    {{zczbSortList[idx]}}<view class="t">▼</view>
+                    <!-- <image src="../../static/images/select_d.png"></image> -->
+                  </view>
+                </picker>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+
+
+    </view>
+
+    <view class="data_years">
+      <view>
+        <view class="data_years_ym" style="border-left: 1rpx rgba(216, 216, 216, 1) solid;">年份</view>
+        <block wx:for="{{zczbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0 ? 'jyzb_green':'jyzb_blue'}}">{{item.ac_yy}}</view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">01</view>
+        <block wx:for="{{zczbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_01}}<text wx:if="{{item.ac_01 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">02</view>
+        <block wx:for="{{zczbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_02}}<text wx:if="{{item.ac_02 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">03</view>
+        <block wx:for="{{zczbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_03}}<text wx:if="{{item.ac_03 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">04</view>
+        <block wx:for="{{zczbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_04}}<text wx:if="{{item.ac_04 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">05</view>
+        <block wx:for="{{zczbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_05}}<text wx:if="{{item.ac_05 !=''}}"></text></view>
+        </block>
+      </view>
+
+      <view>
+        <view class="data_years_ym">06</view>
+        <block wx:for="{{zczbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_06}}<text wx:if="{{item.ac_06 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">07</view>
+        <block wx:for="{{zczbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_07}}<text wx:if="{{item.ac_07 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">08</view>
+        <block wx:for="{{zczbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_08}}<text wx:if="{{item.ac_08 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">09</view>
+        <block wx:for="{{zczbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_09}}<text wx:if="{{item.ac_09 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">10</view>
+        <block wx:for="{{zczbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_10}}<text wx:if="{{item.ac_10 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">11</view>
+        <block wx:for="{{zczbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_11}}<text wx:if="{{item.ac_11 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">12</view>
+        <block wx:for="{{zczbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_12}}<text wx:if="{{item.ac_12 !=''}}"></text></view>
+        </block>
+      </view>
+      <view>
+        <view class="data_years_ym">月均</view>
+        <block wx:for="{{zczbIndexTableList}}" wx:key="index" data-item="item" wx:for-index="idx">
+          <view class="{{idx === 0?'jyzb_green':'jyzb_blue'}}">{{item.ac_mave}}</view>
+        </block>
+      </view>
+    </view>
+    <view class="chart_desc" style="display: flex;justify-content : flex-end;">
+      <!-- <view class="chart_desc_left">单位:万元</view> -->
+      <view class="chart_desc_right">
+        <view class="left_cdr">{{zczbIndexTableList[0].ac_yy}}/01-12</view>
+        <view class="right_cdr" wx:if="{{zczbIndexTableList[1].ac_yy}}">{{zczbIndexTableList[1].ac_yy}}/01-12</view>
+      </view>
+    </view>
+  </view>
+  <view class="jyzb_line" style="width:100%;height: 165px;" wx:if="{{jyzbChartImagePath !=''}}">
+    <image wx:if="{{zczbChartImagePath}}" src="{{zczbChartImagePath}}" mode="widthFix" style="width: 740rpx;  margin-bottom: -25rpx; "></image>
+    <canvas wx:if="{{!zczbChartImagePath}}" canvas-id="zczbChart" class="canvas"></canvas>
+  </view>
+
+  <!-- <view class="jyzb_line" >
+      <canvas canvas-id="lineCanvas-zczb" disable-scroll="true" class="canvas jyzbline_canvas" bindtouchstart="touchHandler"></canvas>
+    </view> -->
+
+  <!-- <view class="select_jyzb" id="jyzhib" >
+      <view class="select_jyzb_l" bindtap="zczbTypeSub" data-id="1">
+        <image style="width: 19rpx;height: 19rpx;" src="../../static/images/shaixuan-3.png"></image>
+      筛选类别</view>
+      <view class="select_jyzb_r">非流动资产</view>
+    </view> -->
+  <!-- 资产总报end-->
+  <!-- 间隔start -->
+
+  <!-- 间隔end -->
+  <!-- 经营指标start -->
+  <view class="gap"></view>
+  <view class="capital_daily_t" style="position: relative;">
+    <view id="jinyzb" style="position: absolute;top: -90rpx;"></view>
+    <view class="capital_daily_title">
+      <view class="cdtl"></view>
+      <view class="cdtl_t">经营指标</view>
+    </view>
+    <view class="capital_daily_t_r">
+      <view class="select_company">
+        <picker bindchange="jyzbBindPickerChange" value="{{jyzb_index}}" range="{{jyzbCompanyList}}">
+          <view class="company_picker">
+            {{jyzbCompanyList[jyzb_index]}}
+          </view>
+        </picker>
+        <image src="../../static/images/select_d.png"></image>
+      </view>
+    </view>
+  </view>
+  <!-- <view style="height: 100rpx;">建设中...</view> -->
+  <view class="jyzb_list">
+    <view class="jyzb_de" bindtap="jyzbDetail" data-id="01">
+      <image style="width: 80rpx;height: 74rpx; " mode="" src="../../static/images/jyzb-pcb.png"></image> PCB收入
+    </view>
+    <view class="jyzb_de" bindtap="jyzbDetail" data-id="02">
+      <image style="width: 80rpx;height: 74rpx;" mode="" src="../../static/images/jyzb-khsr.png"></image> 客户收入
+    </view>
+    <view class="jyzb_de" bindtap="jyzbDetail" data-id="03">
+      <image style="width: 80rpx;height: 74rpx;" mode="" src="../../static/images/jyzb-bcsr.png"></image> 板材收入
+    </view>
+    <view class="jyzb_de" bindtap="jyzbDetail" data-id="04">
+      <image style="width: 80rpx;height: 74rpx;" mode="" src="../../static/images/jyzb-qtsr.png"></image> 其它收入
+    </view>
+    <view class="jyzb_de" bindtap="jyzbDetail" data-id="05">
+      <image style="width: 56rpx;height: 62rpx;" mode="" src="../../static/images/jyzb-bccb.png"></image> 板材成本
+    </view>
+    <view class="jyzb_de" bindtap="jyzbDetail" data-id="06">
+      <image style="width: 56rpx;height: 62rpx;" mode="" src="../../static/images/jyzb-jgcb.png"></image> 加工成本
+    </view>
+    <view class="jyzb_de" bindtap="jyzbDetail" data-id="07">
+      <image style="width: 56rpx;height: 62rpx;" mode="" src="../../static/images/jyzb-wlcb.png"></image> 物料成本
+    </view>
+    <view class="jyzb_de" bindtap="jyzbDetail" data-id="08">
+      <image style="width: 56rpx;height: 62rpx;" mode="" src="../../static/images/jyzb-sccb.png"></image> 生产成本
+    </view>
+    <view class="jyzb_de" bindtap="jyzbDetail" data-id="09">
+      <image style="width: 56rpx;height: 62rpx;" mode="" src="../../static/images/jyzb-ywfy.png"></image> 业务费用
+    </view>
+    <view class="jyzb_de" bindtap="jyzbDetail" data-id="10">
+      <image style="width: 56rpx;height: 62rpx;" mode="" src="../../static/images/jyzb-glfy.png"></image> 管理费用
+    </view>
+    <view class="jyzb_de" bindtap="jyzbDetail" data-id="11">
+      <image style="width: 56rpx;height: 62rpx;" mode="" src="../../static/images/jyzb-cwfy.png"></image> 财务费用
+    </view>
+    <view class="jyzb_de" bindtap="jyzbDetail" data-id="12">
+      <image style="width: 56rpx;height: 62rpx;" mode="" src="../../static/images/jyzb-qtfy.png"></image> 其它费用
+    </view>
+    <view class="jyzb_de" bindtap="jyzbDetail" data-id="13">
+      <image style="width: 56rpx;height: 62rpx;" mode="" src="../../static/images/jyzb-gsyl.png"></image> 公司盈利
+    </view>
+  </view>
+  <!-- 经营指标end -->
+  <!-- 间隔start -->
+  <view class="gap"></view>
+  <!-- 间隔end -->
+  <!-- 财务指标start -->
+  <view class="capital_daily_t" wx:if="{{isShow == true}}">
+    <view class="capital_daily_title">
+      <view class="cdtl"></view>
+      <view class="cdtl_t">财务指标</view>
+    </view>
+    <view class="capital_daily_t_r">
+      <view class="select_company">
+        <picker bindchange="cwzbBindPickerChange" value="{{cwzb_index}}" range="{{companyCwzbList}}">
+          <view class="company_picker">
+            {{companyCwzbList[cwzb_index]}}
+          </view>
+        </picker>
+        <image src="../../static/images/select_d.png"></image>
+      </view>
+    </view>
+  </view>
+
+  <view class="jyzb_list">
+    <view class="jyzb_de" bindtap="cwzbDetail" data-code="01">
+      <image style="width: 56rpx; height:56rpx" src="../../static/images/cwzb-hbzj.png"></image> 货币资金
+    </view>
+    <view class="jyzb_de" bindtap="cwzbDetail" data-code="05">
+      <image style="width: 56rpx; height:56rpx" src="../../static/images/cwzb-wpch.png"></image> 物品存库
+    </view>
+    <view class="jyzb_de" bindtap="cwzbDetail" data-code="03">
+      <image style="width: 56rpx; height:56rpx" src="../../static/images/cwzb-yszk.png"></image> 应收账款
+    </view>
+    <view class="jyzb_de" bindtap="cwzbDetail" data-code="13">
+      <image style="width: 56rpx; height:56rpx" src="../../static/images/cwzb-yfzk.png"></image> 应付账款
+    </view>
+    <view class="jyzb_de" bindtap="cwzbDetail" data-code="07">
+      <image style="width: 56rpx; height:56rpx" src="../../static/images/cwzb-gdzc.png"></image> 固定资产
+    </view>
+  </view>
+  <!-- <view style="height: 100rpx;" wx:if="{{isShow == true}}">建设中...</view> -->
+  <!-- 财务指标end -->
+  <!-- 间隔start -->
+  <view class="gap"></view>
+  <!-- 间隔end -->
+  <!-- 分析报告start -->
+  <view class="capital_daily_t" style="position: relative;" wx:if="{{isShow == true}}">
+    <view id="fxbg" style="position: absolute;top: -90rpx;"></view>
+    <view class="capital_daily_title">
+      <view class="cdtl"></view>
+      <view class="cdtl_t">分析报告</view>
+    </view>
+    <view class="capital_daily_t_r">
+
+    </view>
+  </view>
+  <view class="fxbg_select">
+    <view class="fxbg_button {{fxbg_menu==index?'fxbg_button_active':''}}" wx:for="{{fxbgLbData}}" wx:for-index="index" bindtap="fxbgActive" data-id="{{index}}" wx:key="key">{{item.item_name}}</view>
+  </view>
+  <!-- <view style="height: 100rpx;" wx:if="{{isShow == true}}">建设中...</view> -->
+  <view hidden="{{!barChart}}">
+    <block >
+    <view class="fxbg_zzl_select">
+      <view class="fxbg_zzl_l " class="{{fxbg_item_no==item.item_no?'active':''}}" bindtap="fxbg2Active" data-id="{{index1}}" wx:for="{{fxbgLbData[fxbg_menu].subordinate}}" wx:for-index="index1" wx:key="key" data-name="{{item.item_name}}">
+        <view>{{item.item_name}}</view>
+        <image style="width: 21rpx;height: 21rpx;" bindtap="tipsShow" data-name="{{item.item_name}}" src="../../static/images/wenhao.png"></image>
+      </view>
+    </view>
+    <view class="fxbg_bfb" style="display: flex;flex-wrap: nowrap;width: 100%;justify-content : flex-end;margin: 20rpx 0;">
+      <view style="width: 50%;">
+        <view class="fxbg_bfb_num">
+          <view style="letter-spacing: 3rpx;display: flex;align-items: center;">
+            <view class="fxbg_bfb_num_num">
+              {{xjllLeftpjData[xjllSelectMonthIndex]}}
+              <view class="fxbg_dw_l" style="font-size: 38rpx;">{{fxbgYearData.unit}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="fxbg_dw" style="width: 50%;justify-content: flex-end;margin: 10rpx 0;">
+        <view class="fxbg_dw_r" wx:if="{{fxbg_item_no !=  '03.01'}}" style="padding-right: 35rpx;padding-bottom: 10rpx;">
+          <!-- {{fxbgYearData.s_ym}}至{{fxbgYearData.e_ym}} -->
+          {{fxbgDate2!=''?fxbgDate2:fxbgYearData.s_ym}}至{{fxbgDate1!=''?fxbgDate1:fxbgYearData.e_ym}}
+        </view>
+        <view class="fxbg_dw_r" wx:if="{{fxbg_item_no == '03.01'}}" style="padding-right: 35rpx;padding-bottom: 10rpx;">
+          <!-- {{fxbgYearData.s_ym}}至{{fxbgYearData.e_ym}} -->
+          {{fxbgDate1!=''?fxbgDate1:fxbgYearData.e_ym}}
+        </view>
+      </view>
+    </view>
+    <view class="canvas">
+      <ec-canvas id="mychart" canvas-id="mychart-bar" ec="{{ ec }}" force-use-old-canvas="true"></ec-canvas>
+    </view>
+    <view class="fxbg_bx" style="width: 98%;">
+      <view class="zlbx">
+        <view class="zlbx_l">
+          <view class="zlbx_l_t">{{xjllpjDate!=''?xjllpjDate:fxbgYearData.e_ym}}的{{fxbgYearData.item_name}}表现：</view>
+          <view>评分标准：</view>
+        </view>
+        <view class="zlbx_r" style="height: 140rpx;">
+          <image mode="widthFix" wx:if="{{fxbgYearData.ac_lev == '优'}}" style="width: 96rpx; height: 146rpx;" src="../../static/images/you.png"></image>
+          <image mode="widthFix" wx:if="{{fxbgYearData.ac_lev == '良'}}" style="width: 96rpx; height: 146rpx;" src="../../static/images/liang.png"></image>
+          <image mode="widthFix" wx:if="{{fxbgYearData.ac_lev == '中'}}" style="width: 96rpx; height: 146rpx;" src="../../static/images/zhong.png"></image>
+          <image mode="widthFix" wx:if="{{fxbgYearData.ac_lev == '可'}}" src="../../static/images/ke.png"></image>
+          <image mode="widthFix" wx:if="{{fxbgYearData.ac_lev == '差'}}" src="../../static/images/cha.png"></image>
+        </view>
+      </view>
+      <view class="pfbz" style="width: 100%;">
+        <view class="pfbz_t">
+          <view class="{{fxbgYearData.ac_lev == '优'?'pfbz_t_active':''}}">优</view>
+          <view class="{{fxbgYearData.ac_lev == '良'?'pfbz_t_active':''}}">良</view>
+          <view class="{{fxbgYearData.ac_lev == '中'?'pfbz_t_active':''}}">中</view>
+          <view class="{{fxbgYearData.ac_lev == '可'?'pfbz_t_active':''}}">可</view>
+          <view class="{{fxbgYearData.ac_lev == '差'?'pfbz_t_active':''}}">差</view>
+        </view>
+        <view class="pfbz_b">
+          <view class="{{fxbgYearData.ac_lev == '优'?'pfbz_t_active':''}}">{{scoreSelectData[0]}}</view>
+          <view class="{{fxbgYearData.ac_lev == '良'?'pfbz_t_active':''}}">{{scoreSelectData[1]}}</view>
+          <view class="{{fxbgYearData.ac_lev == '中'?'pfbz_t_active':''}}">{{scoreSelectData[2]}}</view>
+          <view class="{{fxbgYearData.ac_lev == '可'?'pfbz_t_active':''}}">{{scoreSelectData[3]}}</view>
+          <view class="{{fxbgYearData.ac_lev == '差'?'pfbz_t_active':''}}">{{scoreSelectData[4]}}</view>
+        </view>
+      </view>
+    </view>
+  </block>
+  </view>
+  
+  <block wx:if="{{fxbg_menu == 4}}">
+    <view class="fxbg_xjll">
+      <view class="xjll_t" style="margin-top: 32rpx;">
+        <view style="+: flex; align-items: center; margin-right:18rpx;">
+          <view style="width: 8px;	height: 8px;margin-left: 2rpx;		background:#4A90E2;margin-right: 10rpx;	-moz-transform: rotate(45deg);	-webkit-transform: rotate(45deg);	-o-transform: rotate(45deg);	-ms-transform: rotate(45deg);	transform: rotate(45deg); "></view>
+          <view>经营活动产生的现金流量净额</view>
+          <image style="width: 21rpx;height: 21rpx;" src="../../static/images/wenhao.png" bindtap="tipsShow" data-name="经营活动产生的现金流量净额"></image>
+        </view>
+        <view style="display: flex;align-items: center;" class=" ">
+          <view style="width: 11px;height: 11px;background: #7ED321;border-radius: 50%; margin-right: 5rpx;"></view>
+          <view>投资活动产生的现金流量净额</view>
+          <image style="width: 21rpx;height: 21rpx;" src="../../static/images/wenhao.png" bindtap="tipsShow" data-name="投资活动产生的现金流量净额"></image>
+        </view>
+      </view>
+      <view class="xjll_b" style="margin-top: 16rpx;">
+        <view style="display: flex;align-items: center; margin-right:18rpx;" class=" ">
+          <view style="width: 10px;height: 9px;background: #F5A623;border-radius: 1px; margin-right: 7rpx;"></view>
+          <view>筹资活动产生的现金流量净额</view>
+          <image style="width: 21rpx;height: 21rpx;" src="../../static/images/wenhao.png" bindtap="tipsShow" data-name="筹资活动产生的现金流量净额"></image>
+        </view>
+        <view style="display: flex;align-items: center;" class=" ">
+          <view style=" width: 0;height: 0;border-left: 6px solid transparent;border-right: 6px solid transparent;border-bottom: 10px solid #D0021B;margin-right: 4rpx;"></view>
+          <view>现金及现金等价物净增加额</view>
+          <image style="width: 21rpx;height: 21rpx;" src="../../static/images/wenhao.png" bindtap="tipsShow" data-name="现金及现金等价物净增加额"></image>
+        </view>
+      </view>
+
+    </view>
+    <view class="fxbg_dw">
+      <view class="fxbg_dw_l">单位：万元</view>
+      <view class="fxbg_dw_r">{{fxbgYearData.s_ym}}-{{fxbgYearData.e_ym}}</view>
+    </view>
+    <view class="jyzb_line">
+      <canvas canvas-id="lineCanvasXjll" class="canvas" bindtouchstart="touchHander"></canvas>
+    </view>
+    <view class="fxbg_bx" style="background-color: #FFFFFF;">
+      <view class="zlbx">
+        <view class="zlbx_l">
+          <view class="zlbx_l_t">{{xjllpjDate1}}公司处于：</view>
+          <view class="xjlll">
+            <text style="color: #4A90E2;">经营活动现金流量为</text>
+            {{xjllpjData[0].data[xjllSelectMonthIndex]}} 
+            <text wx:if="{{xjllpjData[0].data[xjllSelectMonthIndex] < 0 }}">(负数)</text>
+          </view>
+          <view class="xjlll">
+            <text style="color: #7ED321;">投资活动现金流量为</text>
+            {{xjllpjData[1].data[xjllSelectMonthIndex]}} 
+            <text wx:if="{{xjllpjData[1].data[xjllSelectMonthIndex] < 0 }}">(负数)</text>
+          </view>
+          <view class="xjlll"><text style="color: #F5A623;">筹资活动现金流量为</text>{{xjllpjData[2].data[xjllSelectMonthIndex]}} <text wx:if="{{xjllpjData[2].data[xjllSelectMonthIndex] < 0 }}">(负数)</text></view>
+          <view class="xjll_status" style="margin-top: 24rpx;">
+            <view style="display: flex;margin-bottom: 16rpx;">
+              <view style="display: flex;margin-right: 24rpx;align-items: center;">
+                <view style="width: 24px;height: 5px;border-radius: 3px;margin-right: 8rpx;" class="{{fxbgYearData['ac_lev']=='初创期'?'xjlltypeactive':'xjlltype'}}"></view> 初创期 <image style="width: 21rpx;height: 21rpx;margin-left: 5rpx;" src="../../static/images/wenhao.png"></image>
+              </view>
+              <view style="display: flex;align-items: center;">
+                <view style="width: 24px;height: 5px;border-radius: 3px;margin-right: 8rpx;" class="{{fxbgYearData['ac_lev']=='发展期'?'xjlltypeactive':'xjlltype'}}"></view>发展期 <image style="width: 21rpx;height: 21rpx;margin-left: 5rpx;" src="../../static/images/wenhao.png"></image>
+              </view>
+            </view>
+            <view style="display: flex;">
+              <view style="display: flex;margin-right: 24rpx;align-items: center;">
+                <view style="width: 24px;height: 5px;border-radius: 3px;margin-right: 8rpx;" class="{{fxbgYearData['ac_lev']=='成熟期'?'xjlltypeactive':'xjlltype'}}"></view>成熟期 <image style="width: 21rpx;height: 21rpx;margin-left: 5rpx;" src="../../static/images/wenhao.png"></image>
+              </view>
+              <view style="display: flex;align-items: center;">
+                <view style="width: 24px;height: 5px;border-radius: 3px;margin-right: 8rpx;" class="{{fxbgYearData['ac_lev']=='衰退期'?'xjlltypeactive':'xjlltype'}}"></view>衰退期 <image style="width: 21rpx;height: 21rpx;margin-left: 5rpx;" src="../../static/images/wenhao.png"></image>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="zlbx_r">
+          <image mode="widthFix" wx:if="{{fxbgYearData['ac_lev']=='初创期'}}" src="../../static/images/fxbg_ccq.png"></image>
+          <image mode="widthFix" wx:if="{{fxbgYearData['ac_lev']=='发展期'}}" src="../../static/images/fxbg_fzq.png"></image>
+          <image mode="widthFix" wx:if="{{fxbgYearData['ac_lev']=='成熟期'}}" src="../../static/images/fxbg_csq.png"></image>
+          <image mode="widthFix" wx:if="{{fxbgYearData['ac_lev']=='衰退期'}}" src="../../static/images/fxbg_stq.png"></image>
+        </view>
+      </view>
+
+    </view>
+  </block>
+
+
+  <!-- 分析报告end -->
+  <!-- <view ></view> -->
+
+  <view class="gap"></view>
+  <view class="capital_daily_t" id="mubiao" wx:if="{{isShow == true}}">
+    <view class="capital_daily_title">
+      <view class="cdtl"></view>
+      <view class="cdtl_t">目标</view>
+    </view>
+    <view class="capital_daily_t_r">
+
+    </view>
+  </view>
+
+  <view style="height: 100rpx;" wx:if="{{isShow == true}}">建设中...</view>
+
+  <!-- 问号 弹窗说明 -->
+  <view class="description" wx:if="{{sjsm_status}}">
+
+    <view class="desc_d">
+      <view class="close" style="width: 54rpx;height:54rpx;background-color: rgb(0 0 0 / 92%);width: 100%;padding-bottom: 10rpx; display: flex; justify-content: flex-end;">
+        <image bindtap="sjsmClose" src="../../static/images/desc_close.png" style="width: 54rpx;height:54rpx;"></image>
+      </view>
+      <view class="desc_d_t">数据说明</view>
+      <view class="desc_d_b">
+        <view style="margin-top: 33rpx;margin-left: 35rpx;">
+          <view style="display: flex;">
+            <view style="color: rgba(208, 2, 27, 0.8);"> *</view>
+            <view style="height: 40rpx;font-size: 28rpx;font-family: PingFangSC-Medium, PingFang SC;font-weight: bold;line-height: 40rpx;color: #4A4A4A;margin-bottom: 16rpx;">存货周转率</view>
+          </view>
+          <view style="height: 40rpx;font-size: 28rpx;font-family: PingFangSC-Medium, PingFang SC;font-weight: bold;line-height: 40rpx;color: #4A4A4A;margin-bottom: 16rpx;">计算公式</view>
+          <view style="height: 33rpx;font-size: 24rpx;font-family: PingFangSC-Regular, PingFang SC;font-weight: 400;color: #4A4A4A;line-height: 33rpx;margin-bottom: 16rpx;">存活周转率（次）=营业成本/存活平均余额</view>
+          <view style="height: 33rpx;font-size: 24rpx;font-family: PingFangSC-Regular, PingFang SC;font-weight: 400;color: #4A4A4A;line-height: 33rpx;margin-bottom: 16rpx;">存活平均余额=（期初存货+期末存货）/2</view>
+          <view style="height: 40rpx;font-size: 28rpx;font-family: PingFangSC-Medium, PingFang SC;font-weight: bold;line-height: 40rpx;color: #4A4A4A;margin-bottom: 16rpx;">数据说明</view>
+          <view style="height: 33rpx;font-size: 24rpx;font-family: PingFangSC-Regular, PingFang SC;font-weight: 400;color: #4A4A4A;line-height: 33rpx;margin-bottom: 16rpx;">数据说明： 存货1年周转次数，周转次数越</view>
+          <view style="height: 40rpx;font-size: 28rpx;font-family: PingFangSC-Medium, PingFang SC;font-weight: bold;line-height: 40rpx;color: #4A4A4A;margin-bottom: 16rpx;">评分标准：</view>
+          <view class="pfbz">
+            <view class="pfbz_t">
+              <view class="pfbz_t_active">优</view>
+              <view>良</view>
+              <view>中</view>
+              <view>可</view>
+              <view>差</view>
+            </view>
+            <view class="pfbz_b">
+              <view class="pfbz_t_active">>12%</view>
+              <view>8%-12%</view>
+              <view>5%-8%</view>
+              <view>3%-5%</view>
+              <view>{{'<'}}3%</view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+      </view>
+    </view>
+    <!-- <view class="gap" style="height:200rpx"></view> -->
+    <!-- 经营总报筛选类别start -->
+    <view class="jyzb_select" wx:if="{{jyzbType ==1}}">
+      <view class="jyzb_type">
+        <view class="jyzb_type_a">全部类别</view>
+        <block wx:for="{{jyzbLbData}}" wx:for-index="index" wx:if="{{jyzbLbSelectId == index}}">
+          <view class="jyzb_type_l">
+            <view class="jyzb_type_l_tit">{{item.item_name}}</view>
+            <view class="jyzb_type_l_detail">
+              <view wx:for="{{item.subordinate}}" bindtap="jyzbLbSelect" data-name="{{subItem.item_name}}" data-no="{{subItem.item_no}}" class="{{subItem.item_no==jyzbLbSelectIdx?'active':''}}" wx:for-item="subItem" wx:for-index="i">
+                {{subItem.item_name}}
+              </view>
+            </view>
+          </view>
+        </block>
+
+        <view class="jyzb_type_foot">
+          <view class="jyzb_type_foot_l" bindtap="jyzbTypeSub" data-id="0">重置</view>
+          <view bindtap="jyzbTypeSub" data-id="0" class="jyzb_type_foot_r">确认</view>
+        </view>
+      </view>
+
+    </view>
+    <!-- 经营总报筛选类别end -->
+    <!-- 资产总报筛选类别start -->
+    <view class="zczb_select" wx:if="{{zczbTypeShow ==1}}">
+      <view class="jyzb_type">
+        <view class="jyzb_type_a">全部类别</view>
+        <block wx:for="{{zczbLbData}}" wx:for-index="index" wx:if="{{zczbLbSelectId == index}}">
+          <view class="jyzb_type_l">
+            <view class="jyzb_type_l_tit">{{item.item_name}}</view>
+            <view class="jyzb_type_l_detail">
+              <view wx:for="{{item.subordinate}}" bindtap="zczbLbSelect" data-name="{{subItem.item_name}}" data-no="{{subItem.item_no}}" class="{{subItem.item_no==zczbLbSelectIdx?'active':''}}" wx:for-item="subItem" wx:for-index="i">
+                {{subItem.item_name}}
+              </view>
+            </view>
+          </view>
+        </block>
+
+        <view class="jyzb_type_foot">
+          <view class="jyzb_type_foot_l" bindtap="zczbTypeSub" data-id="0">重置</view>
+          <view bindtap="zczbTypeSub" data-id="0" class="jyzb_type_foot_r">确认</view>
+        </view>
+      </view>
+
+    </view>
+    <!-- 资产总报筛选类别end -->
+    <!-- 提示弹窗 -->
+
+    <!-- <view wx:if="browseShow == true" style="">
+        <view  class="browse">今日浏览:{{browseData.day_pnum}}人，{{browseData.day_cnum}}次 | 本月浏览:{{browseData.month_pnum}}人，{{browseData.month_cnum}}次</view>
+      <view style="height: 40rpx;display:flex;justify-content:center" bindtap="tipsClick" data-index="2" wx:if="{{tips2}}">
+        <view  class="browse"> 总共浏览:{{browseData.all_pnum}}人，{{browseData.all_cnum}}次</view>
+      </view>
+    </view>   -->
+    <view class="description" wx:if="{{browseShow}}" bindtap="browseClick">
+
+      <view class="desc_d" style="margin-top: 20rpx;">
+        <view class="desc_d_t">数据说明 <image src="../../static/images/desc_close.png" style="width: 44rpx; height: 44rpx;position: absolute;right: 18rpx;top: 18rpx;"></image>
+        </view>
+        <view wx:if="{{browseShowId == 1}}" style="font-size: 24rpx;line-height: 40rpx;color: #4A4A4A;margin-bottom: 16rpx;display: flex;flex-direction: column;justify-content: center;align-items: center;width: 100%;height: 200rpx;">
+          <view>今日浏览:{{browseData.day_pnum}}人，{{browseData.day_cnum}}次 </view>
+          <view>本月浏览:{{browseData.month_pnum}}人，{{browseData.month_cnum}}次</view>
+          <view>总共浏览:{{browseData.all_pnum}}人，{{browseData.all_cnum}}次</view>
+        </view>
+        <view wx:if="{{browseShowId == 2}}" style="font-size: 24rpx;line-height: 40rpx;color: #4A4A4A;margin-bottom: 16rpx;display: flex;flex-direction: column;justify-content: center;align-items: center;width: 100%;height: 200rpx;">
+          数据更新时间：当日23时59分更新一次数据
+        </view>
+      </view>
+    </view>
+    <!-- 分析报告start 提示窗口 -->
+    <view class="description" wx:if="{{fxbgTipshow}}" bindtap="fxbgTipClick">
+
+      <view class="desc_d" style="margin-top: 20rpx;">
+        <view class="desc_d_t">数据说明 <image src="../../static/images/desc_close.png" style="width: 44rpx; height: 44rpx;position: absolute;right: 18rpx;top: 18rpx;"></image>
+        </view>
+        <view style="font-size: 24rpx;line-height: 40rpx;color: #4A4A4A;margin-bottom: 16rpx;display: flex;flex-direction: column;justify-content: center;align-items: center;width: 90%;margin:0 auto;height: 200rpx;">
+          <text wx:for="{{tipsData}}" wx:if="{{item.name == tipsSelectName}}">{{item.tips}}</text>
+        </view>
+      </view>
+    </view>
+    <!-- 分析报告end -->
+    <!-- 登录助手 -->
+    
+    <view class="loginAssistant" bindtap="toLogin" wx:if="{{auth == false}}">登录</view>
+    <assistantButton isMainPage="true" functionid="{{functionid}}" wx:if="{{auth == true}}"></assistantButton>
+  </view>

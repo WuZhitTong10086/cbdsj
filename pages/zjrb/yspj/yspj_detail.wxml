@@ -1,0 +1,122 @@
+<!--pages/zjrb/yspj/yspj_detail.wxml-->
+<view class="container">
+  <view class="list title">
+    <view class="list_l" style="font-weight: bold;color: #FFFFFF;">基础信息</view>
+    <view class="list_r"></view>
+  </view>
+  <view class="list">
+    <view class="list_l">票据编号</view>
+    <view class="list_r">{{ar_docu}}</view>
+  </view>
+  <view class="list">
+    <view class="list_l">所属组织</view>
+    <view class="list_r">{{co_name}}</view>
+  </view>
+  <view class="list">
+    <view class="list_l">票据性质</view>
+    <view class="list_r">{{ar_nature}}</view>
+  </view>
+  <view class="list">
+    <view class="list_l">币别代号</view>
+    <view class="list_r">{{od_id}}</view>
+  </view>
+  <view class="nav"></view>
+  <view class="list title">
+    <view class="list_l" style="font-weight: bold;color: #FFFFFF;">日期</view>
+    <view class="list_r"></view>
+  </view>
+  <view class="list">
+    <view class="list_l">出票日</view>
+    <view class="list_r">{{ar_iss_date}}</view>
+  </view>
+  <view class="list">
+    <view class="list_l">收票日</view>
+    <view class="list_r">{{ar_rec_date}}</view>
+  </view>
+  <view class="list">
+    <view class="list_l">到期日</view>
+    <view class="list_r">{{ar_exp_date}}</view>
+  </view>
+  
+  <view class="nav"></view>
+  <view class="list title">
+    <view class="list_l" style="font-weight: bold;color: #FFFFFF;">票面</view>
+    <view class="list_r"></view>
+  </view>
+  <view class="list">
+    <view class="list_l">出票人</view>
+    <view class="list_r">{{ar_drawer}}</view>
+  </view>
+  <view class="list">
+    <view class="list_l">收票人</view>
+    <view class="list_r">{{ar_taker}}</view>
+  </view>
+  <view class="list">
+    <view class="list_l">出票银行</view>
+    <view class="list_r">{{bk_name}}</view>
+  </view>
+  <view class="list">
+    <view class="list_l">持票银行</view>
+    <view class="list_r">{{ar_cph}}</view>
+  </view>
+  
+
+  <view class="nav"></view>
+  <view class="list title">
+    <view class="list_l" style="font-weight: bold;color: #FFFFFF;">收入</view>
+    <view class="list_r"></view>
+  </view>
+  <view class="list">
+    <view class="list_l">收入对象</view>
+    <view class="list_r">{{ar_income_obj}}</view>
+  </view>
+  <view class="list">
+    <view class="list_l">收入金额</view>
+    <view class="list_r">{{ar_camt}}元</view>
+  </view>
+  
+  
+  
+  <!-- <view class="list">
+    <view class="list_l">持票行</view>
+    <view class="list_r">{{ar_cph}}</view>
+  </view>
+ 
+  <view class="list">
+    <view class="list_l">到期日期</view>
+    <view class="list_r blue">{{ar_exp_date}}</view>
+  </view>
+  <view class="nav"></view>
+  <view class="list">
+    <view class="list_l">收票日期</view>
+    <view class="list_r blue">{{ar_rec_date}}</view>
+  </view>
+  <view class="list">
+    <view class="list_l">收入对象</view>
+    <view class="list_r">{{ar_income_obj}}</view>
+  </view>
+  <view class="list">
+    <view class="list_l">收入金额</view>
+    <view class="list_r">{{ar_camt}}</view>
+  </view>
+  <view class="nav"></view>
+  <view class="list">
+    <view class="list_l ">支出日期</view>
+    <view class="list_r blue">{{pay_date!='undefined'?pay_date:''}}</view>
+  </view>
+  <view class="list">
+    <view class="list_l">支出对象</view>
+    <view class="list_r">{{ar_pay_obj}}</view>
+  </view>
+  <view class="list">
+    <view class="list_l">支出金额</view>
+    <view class="list_r">{{ar_damt}}</view>
+  </view>
+  <view class="nav"></view>
+  <view class="list">
+    <view class="list_l">结存金额</view>
+    <view class="list_r">{{ar_jamt}}</view>
+  </view> -->
+  <assistantButton></assistantButton>
+</view>
+

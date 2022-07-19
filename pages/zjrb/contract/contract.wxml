@@ -1,0 +1,25 @@
+<!--pages/zjrb/contract/contract.wxml-->
+<view class="container">
+  <view class="list">
+    <view class="list_l">合同号</view>
+    <view class="list_r">3700112140</view>
+  </view>
+  <view class="list">
+    <view class="list_l">贷款金额</view>
+    <view class="list_r">1000.0</view>
+  </view>
+  
+  <view class="list">
+    <view class="list_l">年利率</view>
+    <view class="list_r">8%</view>
+  </view>
+  <view class="nav"> </view>
+  <view class="list">
+    <view class="list_l">借款日期</view>
+    <view class="list_r">2021-10-11</view>
+  </view>
+  <view class="list">
+    <view class="list_l">到期日期</view>
+    <view class="list_r">2021-10-9</view>
+  </view>
+</view>

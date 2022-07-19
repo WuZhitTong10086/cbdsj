@@ -1,0 +1,57 @@
+<!-- 添加按钮 -->
+<!--可拖动按钮控件表-->
+<!--buttonStart和buttonEnd一定不能用catch事件，否则按钮点击事件会失效-->
+<view wx:if="{{!displayTextarea}}" class="btn_Suspension" bindtap="openTextarea" catchtouchmove="buttonMove" bindtouchstart="buttonStart" bindtouchend="buttonEnd" style="top:{{buttonTop}}px;left:{{buttonLeft}}px;">
+  助手
+  <!--这里是按钮图标-->
+  <!-- <image class="Suspension_logo" src="/images/assistantButton.png"></image> -->
+</view>
+
+<!-- <view wx:if="{{displayTextarea}}" class="video-list" wx:key="title">
+  <view class="video-title">标题：</view>
+  <view class="video-time">时间：</view>
+  <video src="https://lvdeng-gz-dev.obs.cn-south-1.myhuaweicloud.com/video/ktlnd5ov99o0-%E8%BF%9B%E8%A1%8C%E4%B8%AD-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E4%B8%8E%E6%BC%94%E7%A4%BA.mp4" object-fit="fill"></video>
+</view> -->
+
+<view wx:if="{{displayTextarea}}" class="popup" catchtap="closeTextarea" catchtouchmove="doNothing">
+  <fileList id="fileList"></fileList>
+
+  <view class="showTips" catchtap="doNothing" style="margin-top:{{textAreaTop}}px;border-radius: 30rpx 30rpx 0 0;background-color: #fff;height: 480rpx;">
+    <view style="display: flex;flex-direction: row;justify-content: space-around;margin-top: 20rpx;padding-left:20rpx;padding-right:20rpx;border-bottom: 2rpx solid #EEEEEE;">
+
+      <myRadio bind:radioChange="radioChange" radioItems="{{envItems}}" style="margin-top: 5rpx"></myRadio>
+
+      <view class="tab">
+        <view class="swiper-tab">
+          <view wx:for="{{categoryItems}}" wx:key="index" class="swiper-tab-list {{currentTab==index ? 'on' : ''}}" data-current="{{index}}" bindtap="swichNav">
+            {{item.name}}
+          </view>
+        </view>
+      </view>
+
+      <view style="margin-top:-5rpx;color: #3474E9;font-size:30rpx;height:50rpx;line-height:50rpx;text-align: center;" bindtap="confirm">提交</view>
+    </view>
+    <view style="padding: 20rpx;"><textarea style="height: 150rpx;width: 100%;" name="userName" placeholder="请输入问题或建议. . ." bindinput='setValue' /></view>
+    <view style="display: flex;flex-direction: row;justify-content: space-between;padding: 30rpx;">
+      <view style="display: flex;flex-direction: row;justify-content: space-between;">
+
+        <block wx:for="{{thumb}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+          <view style="position: relative;">
+            <image style="height: 100rpx;width: 100rpx;margin-right: 20rpx;" src="{{item}}"></image>
+            <image style="position: absolute; margin-top: 0rpx;margin-left: -50rpx;height: 30rpx;width: 30rpx;" catchtap="deleteImg" data-index="{{index}}" src="/images/assistant/close.png"></image>
+          </view>
+        </block>
+
+        <view style="height: 100rpx;width: 100rpx;margin-right: 20rpx;background-color: #EEE;display: flex;justify-content: center;align-items: center;" catchtap="chooseImg">
+          <image style="height: 40rpx;width: 50rpx;" src="/images/assistant/photoButton.png"></image>
+        </view>
+        <view style="height: 100rpx;width: 100rpx;margin-right: 20rpx;background-color: #EEE;display: flex;justify-content: center;align-items: center;" catchtap="openVideo">
+          <image style="height: 50rpx;width: 50rpx;" src="/images/assistant/videoButton.png"></image>
+        </view>
+        <view style="font-size: 90rpx;color: #999;" catchtap="openFileList">...</view>
+      </view>
+      <view style="height: 100rpx;line-height: 100rpx;color: #999;" catchtap="closeTextarea">取消</view>
+    </view>
+  </view>
+</view>
+

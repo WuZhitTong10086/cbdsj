@@ -1,0 +1,18 @@
+<!--pages/login/login.wxml-->
+<!--pages/login/login.wxml-->
+<view class="login-page">
+    <view class="head">
+        <image src="/static/logo.png"></image>
+    </view>
+    <view class="main">
+        <text>申请获得以下权限</text>
+        <text>获取您的公开信息（昵称、头像等）</text>
+    </view>
+    <view class="set">
+        <button bindtap="getUserProfile" wx:if="{{!isVerify}}">微信授权登录</button>
+        <!-- <button open-type="getUserInfo" bindgetuserinfo="getInfo" wx:if="{{!isVerify}}">微信授权登录</button> -->
+        <button wx:if="{{isVerify}}">请联系管理员绑定ERP账号</button>
+        <navigator url="/pages/index/index" open-type='switchTab' hover-class="none">取消</navigator>
+    </view>
+</view>
+

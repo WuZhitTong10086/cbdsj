@@ -1,0 +1,89 @@
+.list {
+  min-height: 100vh;
+  width: 100%;
+  padding: 0rpx 15rpx 0rpx 29rpx;
+  box-sizing: border-box;
+}
+
+.table {
+  overflow: hidden;
+  overflow-x: auto;
+  width: 100%;
+  white-space: nowrap;
+  background-color: #fff;
+}
+
+.thead {
+  width: 100%;
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 500;
+  color: rgba(81, 81, 81, 1);
+  line-height: 32rpx;
+  background-color: #fff;
+  white-space: nowrap;
+  height: 62rpx;
+  background-color: #F5F5F5;
+}
+
+.thead .th {
+  display: inline-block;
+  width: 80rpx;
+  /* margin-left: 4rpx; */
+  position: relative;
+  height: 66rpx;
+  line-height: 66rpx;
+  text-align: center;
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: bold;
+  vertical-align: middle;
+  /* padding-left: 10rpx; */
+  /* padding-right: 10rpx; */
+}
+
+
+.thead .th text {
+  display: block-inline;
+  text-align: center;
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: bold;
+}
+
+.tbody .main {
+  white-space: nowrap;
+  background-color: #fff;
+}
+
+.tbody .tr .td {
+  /* width: 80rpx; */
+  /* background: #EDEDED; */
+  /* margin-left: 4rpx; */
+  /* margin-bottom: 2rpx; */
+  /* padding-left: 10rpx; */
+  /* padding-right: 10rpx; */
+  text-align: center;
+  font-size: 23rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  color: rgba(81, 81, 81, 1);
+  height: 54rpx;
+  line-height: 54rpx;
+  display: inline-block;
+  /* overflow: hidden; */
+}
+
+.tr:nth-child(even){
+  background-color: #F5F5F5;
+  
+}
+
+/* 过长显示省略号 */
+.dot {
+  display: -webkit-box;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
