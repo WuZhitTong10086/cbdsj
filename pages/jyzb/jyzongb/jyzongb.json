@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "assistantButton": "/components/assistantButton/assistantButton"
+  },
+  "navigationBarTitleText": "经营总报"
+}

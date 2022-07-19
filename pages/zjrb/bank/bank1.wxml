@@ -1,0 +1,32 @@
+
+<view class="list">
+    <scroll-view class="table" scroll-x="true" scroll-y="true">
+        <view class="thead" style="width: calc(100% + 200px);">
+            <view class="th" style="width: calc(100% / 9);">日期</view>
+            <view class="th" style="width: calc((100% / 10) - 30rpx);">币别</view>
+            <view class="th" style="width: calc(100% / 10);">收入金额</view>
+            <view class="th" style="width: calc(100% / 10);">支出金额</view>
+            <view class="th" style="width: calc(100% / 10);">结存金额</view>
+            <view class="th" style="width: calc(100% / 10);">银行</view>
+            <view class="th" style="width: calc(100% / 10);">账号</view>
+            <view class="th" style="width: calc(100% / 12);text-align: left;">摘要</view>
+        </view>
+        <scroll-view scroll-y="true"  style='height:{{tbodyHeight}}px;width: calc(100% + 200px);' class='tbody'>
+            <view class="tr" wx:for="{{data_list}}" wx:key="sIndex" wx:for-item="item" wx:for-index="sIndex">
+              <view class="td" style="width: calc(100% / 9);">{{item.ac_date}}</view>
+              <view class="td" style="width: calc((100% / 10) - 30rpx);">{{item.od_id}}</view>
+              <view class="td" style="width: calc(100% / 10);"> {{_num==0?item.ac_camt1:item.ac_camt}}</view>
+              <view class="td" style="width: calc(100% / 10);">{{_num==0?item.ac_damt1:item.ac_damt}}</view>
+              <view class="td" style="width: calc(100% / 10);">{{_num==0?item.ac_balance1:item.ac_balance}}</view>
+              <view class="td" style="width: calc(100% / 10);">{{item.bk_name}}</view>
+              <view class="td" style="width: calc(100% / 10);">*{{tools.strcut(item.bk_no,-4)}}</view>
+              <view class="td" style="width: calc(100% / 12);text-align: left;">
+              <!-- {{item.ac_remk}} -->
+                <text wx:if="{{item.showMore==false && item.ac_remk.length > 10 }}" data-msg="{{item.ac_remk}}" data-idx="{{idx}}" bindtap="showMore">{{item.ac_remk1}}...</text>
+                <text wx:else="{{item.showMore==true}}">{{item.ac_remk}}</text>
+              </view>
+            </view>
+            <view style="height: 200rpx"></view>
+        </scroll-view>
+    </scroll-view>
+</view>

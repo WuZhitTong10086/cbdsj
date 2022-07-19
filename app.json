@@ -1,0 +1,32 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/index/test",
+    "pages/logs/logs",
+    "pages/jyzb/jyzb",
+    "pages/zjrb/cash/cash",
+    "pages/zjrb/yfpj/yfpj",
+    "pages/zjrb/loan/loan",
+    "pages/zjrb/contract/contract",
+    "pages/zjrb/yspj/yspj",
+    "pages/zjrb/yspj/yspj_detail",
+    "pages/jyzb/jyzongb/jyzongb",
+    "pages/zczb/zczb",
+    "pages/zjrb/bank/bank",
+    "pages/zjrb/jcze/jcze",
+    "pages/login/login",
+    "pages/jyzb/pcb/pcb",
+    "pages/jyzb/other/other",
+    "pages/jyzb/ywfy/ywfy",
+    "pages/zjrb/bank/bank1",
+    "pages/cwzb/cwzb"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Weixin",
+    "navigationBarTextStyle": "black"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,23 @@
+<view wx:if="{{displayFileList}}" class="popup" catchtap="doNothing">
+  <view style="z-index:103; width: 700rpx;height: 700rpx;background-color: #fff;position: absolute;left: 50%;top: 50%;margin-left: -350rpx;margin-top: -350rpx;border-radius: 30rpx">
+
+    <view style="height: 580rpx;padding-top:20rpx">
+      <view wx:for="{{fileList}}" style="display: flex;justify-content: space-between;padding: 20rpx;border-bottom: 1px solid #EEEEEE;">
+        <view style="display: flex;justify-content: flex-start">
+          <view>
+            <image style="height: 50rpx;width: 50rpx;" src="/images/assistant/doc.png"></image>
+          </view>
+          <view style="margin-left: 10rpx;height: 50rpx;line-height: 50rpx;">{{item.fileName}}</view>
+        </view>
+        <view style="width:100rpx;display: flex;justify-content: space-around;align-items: center">
+          <view><image style="height: 25rpx;width: 35rpx;" src="/images/assistant/eye.png"></image></view>
+          <view style="color: #ccc;">|</view>
+          <view><image style="height: 25rpx;width: 30rpx;" src="/images/assistant/down.png"></image></view>
+        </view>
+      </view>
+    </view>
+
+    <view style="color: #3474E9;font-size:26rpx;height:100rpx;line-height:100rpx;text-align: center;border-top: 1px solid #EEEEEE;" catchtap="closeFileList">取消</view>
+
+  </view>
+</view>

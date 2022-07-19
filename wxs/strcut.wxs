@@ -1,0 +1,9 @@
+// 截取字符串
+var strcut = function(val,num) {
+  if (val.length == 0 || val == undefined) {
+    return '';
+  }
+  return val.slice(num);
+  
+}
+module.exports.strcut = strcut;

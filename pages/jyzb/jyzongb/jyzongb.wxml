@@ -1,0 +1,78 @@
+<!--pages/jyzb/jyzongb/jyzongb.wxml-->
+<view class="container">
+  <view class="top" catchtouchmove="return">
+    <view class="top_l">
+      <view style="width: 168rpx;display: flex;align-items: center;justify-content: center;">{{c_name}}</view>
+      <view class="shu"></view>
+      <view style="display: flex;align-items: center;justify-content: center;">{{ac_ym_s}}-{{ac_ym_e}}</view>
+    </view>
+    <view class="top_r"></view>
+  </view>
+
+  <view class="foot">
+    <view class="foot_tit">
+      <view style="width:130rpx;text-align: center;">
+        <view style="padding-right: 50rpx">项目</view>
+      </view>
+      <view style=" width:50rpx;text-align: center;">评价</view>
+      <view style=" width:60rpx;text-align: center;">当月</view>
+      <view style=" width:60rpx;text-align: center;">同期</view>
+      <view style=" width:60rpx;text-align: center;">上期</view>
+      <view style=" width:130rpx;text-align: center;">
+        <view>占收入比</view>
+        <view style="display: flex;text-align: center;">
+          <view style="width: 50%;text-align: center;">上年</view>
+          <view style="width: 50%;text-align: center;">当期</view>
+        </view>
+      </view>
+      <view style=" width:60rpx;text-align: center;">同比</view>
+      <view style=" width:60rpx;text-align: center;">环比</view>
+    </view>
+    <scroll-view scroll-y style="height:{{tbodyHeight}}px;">
+      <block wx:for="{{dataList}}" wx:key="index" data-item="item" wx:for-index="idx">
+        <view class="foot_list child_two">
+
+          <!-- <text wx:if="{{item.showMore==false && item.ac_remk.length > 20 }}" data-idx="{{idx}}" bindtap="showMore">{{item.ac_remk1}}...</text>
+              <text wx:else="{{item.showMore==true}}">{{item.ac_remk}}</text> -->
+          <view style="width:130rpx;text-align: center;display: flex;align-items: center;font-weight: bold;height: 100%;">
+            <text wx:if="{{item.showMore==false && item.item_name.length > 4 }}" data-idx="{{idx}}" bindtap="showMore">{{item.item_name1}}...</text>
+            <text wx:else="{{item.showMore==true}}">{{item.item_name}}</text>
+            <view wx:if="{{item.subordinate != ''}}" bindtap="selectClilck" data-idx="{{idx}}" style="height: 100%;width: 50rpx;display: flex; align-items: center;justify-content: center;">
+              <image style="height: 12rpx;width: 10rpx;" mode="heightFix" class="{{ select_index == idx?'img_fz':''}}" src="../../../static/images/bluexia.png"></image>
+            </view>
+
+          </view>
+          <view style=" width:50rpx;font-weight: bold;"><text style="margin-left: 10rpx;">{{item.ac_lev}}</text></view>
+          <view style=" width:60rpx;text-align: center;" wx:if="{{item.item_name == '毛利率' || item.item_name == '净利率'}}">{{item.ac_amt}}%</view>
+          <view style=" width:60rpx;text-align: center;" wx:if="{{item.item_name != '毛利率' && item.item_name != '净利率'}}">{{item.ac_amt}}</view>
+          <view style=" width:60rpx;text-align: center;" wx:if="{{item.item_name == '毛利率' || item.item_name == '净利率'}}">{{item.ac_pamt}}%</view>
+          <view style=" width:60rpx;text-align: center;" wx:if="{{item.item_name != '毛利率' && item.item_name != '净利率'}}">{{item.ac_pamt}}</view>
+          <view style=" width:60rpx;text-align: center;" wx:if="{{item.item_name == '毛利率' || item.item_name == '净利率'}}">{{item.ac_lamt}}%</view>
+          <view style=" width:60rpx;text-align: center;" wx:if="{{item.item_name != '毛利率' && item.item_name != '净利率'}}">{{item.ac_lamt}}</view>
+          <view style=" width:65rpx;text-align: center;">{{item.y_rr}}%</view>
+          <view style=" width:65rpx;text-align: center;">{{item.ac_rr}}%</view>
+          <view style=" width:60rpx;text-align: center;">{{item.ac_pratio}}%</view>
+          <view style=" width:60rpx;text-align: center;">{{item.ac_lratio}}%</view>
+        </view>
+        <view class="foot_list child_three" wx:for="{{item.subordinate}}" wx:for-item="subItem" wx:for-index="i" wx:if="{{select_index == idx}}">
+          <view style="width:130rpx;text-align: left;font-weight: bold;color: rgba(23, 117, 230, 1);font-size: 24rpx;">
+            <!-- {{subItem.item_name1}} -->
+            <text wx:if="{{subItem.showMore==false && subItem.item_name.length > 4 }}" data-index="{{idx}}" data-index2="{{i}}" bindtap="showMore2">{{subItem.item_name1}}...</text>
+            <text wx:else="{{subItem.showMore==true}}">{{subItem.item_name}}</text>
+          </view>
+          <view style=" width:50rpx;font-weight: bold;"> <text style="margin-left: 10rpx;">{{subItem.ac_lev}}</text></view>
+          <view style=" width:60rpx;text-align: center;">{{subItem.ac_amt}}</view>
+          <view style=" width:60rpx;text-align: center;">{{subItem.ac_pamt}}</view>
+          <view style=" width:60rpx;text-align: center;">{{subItem.ac_lamt}}</view>
+          <view style=" width:65rpx;text-align: center;">{{subItem.y_rr}}%</view>
+          <view style=" width:65rpx;text-align: center;">{{subItem.ac_rr}}%</view>
+          <view style=" width:60rpx;text-align: center;">{{subItem.ac_pratio}}%</view>
+          <view style=" width:60rpx;text-align: center;">{{subItem.ac_lratio}}%</view>
+        </view>
+      </block>
+    </scroll-view>
+
+  </view>
+
+  <assistantButton functionid="{{functionid}}"></assistantButton>
+</view>

@@ -1,0 +1,64 @@
+/* pages/login/login.wxss */
+/* pages/login/login.wxss */
+page{
+  height: 100%;
+}
+.login-page{
+  height: 80%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  /* padding-bottom: 30%; */
+  box-sizing: border-box; 
+}
+.head image:first-child{
+  display: block;
+  width: 156rpx;
+  height: 174rpx;
+  margin-bottom: 28rpx;
+}
+.head image:nth-child(2){
+  display: block;
+  width: 166rpx;
+  height: 63rpx;
+}
+.main text{
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(0,0,0,1);
+  line-height:40rpx;
+  text-align: center;
+  display: block;
+  margin-block-start: 36rpx;
+}
+.set button{
+  width:686rpx !important;
+  height:86rpx;
+  background:rgba(13,193,97,1);
+  border-radius:16rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  line-height:86rpx;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  display: block;
+}
+.set navigator{
+  display: block;
+  width:686rpx;
+  height:86rpx;
+  background:rgba(147,147,147,0.9);
+  border-radius:16rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  line-height:86rpx;
+  text-align: center;
+  margin-top: 44rpx;
+}

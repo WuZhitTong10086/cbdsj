@@ -1,0 +1,76 @@
+<!--pages/zjrb/cash/cash.wxml-->
+<view class="container">
+  <view class="top">
+    <view class="top_l">
+      <view style="width: 168rpx;display: flex;align-items: center;justify-content: start;">{{co_name}}</view>
+      <view class="shu"></view>
+      <view style="width:115rpx;display: flex;align-items: center;justify-content: start;">{{selectDate[date_num]}}</view>
+    </view>
+    <view class="select_account">
+      <picker bindchange="xingzhiChange" value="{{xingzhi_index}}" range="{{xingzhiList}}">
+        <view class="account_picker">
+          {{xingzhiList[xingzhi_index]}}
+        </view>
+      </picker>
+      <image src="../../../static/images/picker_dark.png"></image>
+    </view>
+  </view>
+  <view class="list" style="margin-top: 24rpx;height: {{windowHeight}}px;">
+    <scroll-view class="table" scroll-x scroll-y style="height: {{windowHeight}}px;" scroll-anchoring="true">
+      <view style="height: auto;">
+        <view class="thead" style="width: 1200rpx;display: flex;z-index: 99999;top: 0px;position: sticky;">
+          <view style="width: 33%;z-index: 10;left: 0px;top: 0px;position: sticky;background: #f5f5f5;">
+            <view class="th" style="width: 33.333%;">付款日期</view>
+            <view class="th" style="width: 33.334%;">到期日期</view>
+            <view class="th" style="width: 33.333%;">开票公司</view>
+          </view>
+          <view class="th" style="width: 7%;top: 0px;">金额</view>
+          <view class="th dot" style="width: 12%;top: 0px;">收票公司</view>
+          <view class="th" style="width: 7%;top: 0px;">币别</view>
+          <view class="th" style="width: 14%;top: 0px;">银行</view>
+          <view class="th" style="width: 15%;top: 0px;">性质</view>
+          <view class="th" style="width: 12%;top: 0px;">票号</view>
+        </view>
+        <view style='width: 1200rpx;' class='tbody'>
+          <view class="tr" wx:for="{{data_list}}" wx:key="sIndex" wx:for-item="item" wx:for-index="idx" style="display:flex;">
+            <view style="width: 33%;z-index: 10;left: 0px;position: sticky;background: {{idx%2===0 ? '#ffffff':'#f5f5f5'}};">
+              <view class="td" style="width: 33.33%;">
+                {{item.ap_date}}
+              </view>
+              <view class="td" style="width: 33.34%;">
+                {{item.ap_exp_date}}
+              </view>
+              <view class="td" style="width: 33.33%;">
+                {{item.org_name}}
+              </view>
+            </view>
+            <view class="td" style="width: 7%;">{{item.ap_amt}}</view>
+            <view class="td dot" style="width: 12%;" bindtap='changeCuName' data-cu_name='{{item.cu_name}}'>{{item.cu_name1}}</view>
+            <view class="td" style="width: 7%;">{{item.od_id}}</view>
+            <view class="td" style="width: 14%;">{{item.ap_acceptor}}</view>
+            <view class="td" style="width: 15%;">{{item.ap_nature}}</view>
+            <view class="td" style="width: 12%;">{{item.ap_docu}}</view>
+          </view>
+          <view style="height: 200rpx"></view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  <!-- <view class="list" style="margin-top: 24rpx;height: {{windowHeight}}px;width: 100%;">
+    <scroll-view class="table1" scroll-x scroll-y style="height: {{windowHeight}}px;" scroll-anchoring="true">
+      <view class="tr1" wx:for="{{firstData}}" wx:key="sIndex" wx:for-item="item" wx:for-index="idx">
+        <view class="td2" wx:if="{{item.ap_exp_date}}" style="display: flex;flex-direction:column;width: 50%;padding-left: 20rpx;">
+          <text>{{item.ap_exp_date}}</text>
+          <text wx:if="{{item.ap_exp_date}}">小计</text>
+        </view>
+        <view class="td1" wx:if="{{!item.ap_exp_date}}" style="display:block;height: 80rpx;align-items : flex-start; width: 50%;padding-left: 20rpx;">
+          <text>合计</text>
+        </view>
+        <view class="td1" style="width: 50%;">
+          <text>{{item.ap_amt}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view> -->
+  <assistantButton></assistantButton>
+</view>

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "assistantButton": "/components/assistantButton/assistantButton"
+  },
+  "navigationBarTitleText": "合同号详情"
+}
